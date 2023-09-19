@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Binar Challenge App</string>
+    <string name="app_name">Challenge App Ilham</string>
     <string name="hai_ilham">Hai, Ilham!</string>
     <string name="mau_makan_apa_nih">Mau makan apa nih?</string>
     <string name="diskon_25">Diskon 25%</string>
@@ -10,7 +10,6 @@
     <string name="snack">Snack</string>
     <string name="minuman">Minuman</string>
     <string name="list_menu_makanan">List Menu Makanan</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem10">lorem ipsum</string>
     <string name="lokasi">Lokasi</string>
