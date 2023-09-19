@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/fragmentHomePage">
+
+    <fragment
+        android:id="@+id/fragmentHomePage"
+        android:name="com.jaws.mybinarchallengeapp.page.fragmenthomepage.FragmentHomePage"
+        android:label="fragment_home_page"
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_fragmentHomePage_to_fragmentMenuDetail"
+            app:destination="@id/fragmentMenuDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMenuDetail"
+        android:name="com.jaws.mybinarchallengeapp.page.fragmentmenudetail.FragmentMenuDetail"
+        android:label="fragment_menu_detail"
+        tools:layout="@layout/fragment_menu_detail" >
+        <argument
+            android:name="menu"
+            app:argType="com.jaws.mybinarchallengeapp.model.Menu"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+</navigation>
