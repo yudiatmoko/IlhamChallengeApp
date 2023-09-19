@@ -1,7 +1,8 @@
-package com.jaws.challengeappilham
+package com.jaws.challengeappilham.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jaws.challengeappilham.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
