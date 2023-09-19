@@ -243,8 +243,8 @@
         tools:itemCount="4"
         tools:layoutManager="GridLayoutManager"
         tools:listitem="@layout/menu_item"
-        tools:text=""
-        tools:spanCount="2">
+        tools:spanCount="2"
+        tools:text="">
 
     </androidx.recyclerview.widget.RecyclerView>
 

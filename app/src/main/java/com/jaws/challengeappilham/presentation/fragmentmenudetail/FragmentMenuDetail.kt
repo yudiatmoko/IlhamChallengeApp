@@ -1,4 +1,4 @@
-package com.jaws.mybinarchallengeapp.page.fragmentmenudetail
+package com.jaws.challengeappilham.presentation.fragmentmenudetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
-import com.jaws.mybinarchallengeapp.R
-import com.jaws.mybinarchallengeapp.databinding.FragmentMenuDetailBinding
-import com.jaws.mybinarchallengeapp.model.Menu
+import com.jaws.challengeappilham.databinding.FragmentMenuDetailBinding
+import com.jaws.challengeappilham.model.Menu
 
 class FragmentMenuDetail : Fragment() {
 
@@ -19,14 +17,11 @@ class FragmentMenuDetail : Fragment() {
         FragmentMenuDetailArgs.fromBundle(arguments as Bundle).menu
     }
 
-<<<<<<< HEAD
     companion object{
         const val ADD_TO_CART = "Tambah ke Keranjang - "
         const val RP = "Rp."
     }
 
-=======
->>>>>>> origin/feature/feature_menu_detail
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,18 +38,12 @@ class FragmentMenuDetail : Fragment() {
 
     private fun showProfileData() {
         if(menu != null){
-<<<<<<< HEAD
             binding.ivImgMenuItemDetail.setImageResource(menu?.menuImg!!)
             binding.tvMenuName.text = menu?.menuName
             binding.tvMenuPrice.text = "$RP ${menu?.menuPrice?.toInt()}"
             binding.btnAddToCart.text = "$ADD_TO_CART $RP ${menu?.menuPrice?.toInt()}"
             binding.tvMenuDesc.text = menu?.menuDesc
-=======
-            menu?.menuImg?.let { binding.ivImgMenuItemDetail.setImageResource(it) }
-            binding.tvMenuName.text = menu?.menuName
-            binding.tvMenuPrice.text = menu?.menuPrice
-            binding.btnAddToCart.text = "Tambah ke Keranjang - ${ menu?.menuPrice.toString() }"
->>>>>>> origin/feature/feature_menu_detail
+
         } else{
             Toast.makeText(requireContext(), "Profile is null", Toast.LENGTH_SHORT).show()
         }
