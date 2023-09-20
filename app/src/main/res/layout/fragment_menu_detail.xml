@@ -154,7 +154,7 @@
             app:layout_constraintTop_toBottomOf="@id/view_line_2">
 
             <ImageButton
-                android:id="@+id/ic_add"
+                android:id="@+id/ib_add"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@android:color/transparent"
@@ -170,7 +170,7 @@
                 android:textColor="@color/black" />
 
             <ImageButton
-                android:id="@+id/ic_remove"
+                android:id="@+id/ib_remove"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@android:color/transparent"
