@@ -16,4 +16,5 @@
     <string name="rupiah" formatted="false">Rp. %d</string>
     <string name="add_to_cart" formatted="false">Tambah ke Keranjang - Rp. %d</string>
     <string name="counting">1</string>
+    <string name="location">Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345</string>
 </resources>

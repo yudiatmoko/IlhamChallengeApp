@@ -115,12 +115,14 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_location_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:justificationMode="inter_word"
                     android:maxLines="5"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     tools:text="@tools:sample/lorem/random" />
 
