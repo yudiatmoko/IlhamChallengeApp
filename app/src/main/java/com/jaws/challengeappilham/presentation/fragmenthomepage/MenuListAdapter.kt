@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.jaws.challengeappilham.databinding.MenuItemBinding
+import com.jaws.challengeappilham.databinding.MenuGridItemBinding
 import com.jaws.challengeappilham.model.Menu
 
 class MenuListAdapter(
     private val onItemClick: (Menu) -> Unit,
-) : RecyclerView.Adapter<MenuItemListViewHolder>() {
+) : RecyclerView.Adapter<MenuItemGridViewHolder>() {
 
     private val differ = AsyncListDiffer(this,
         object : DiffUtil.ItemCallback<Menu>() {
@@ -37,9 +37,9 @@ class MenuListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): MenuItemListViewHolder {
-        return MenuItemListViewHolder(
-            binding = MenuItemBinding.inflate(
+    ): MenuItemGridViewHolder {
+        return MenuItemGridViewHolder(
+            binding = MenuGridItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -49,7 +49,7 @@ class MenuListAdapter(
     }
 
     override fun onBindViewHolder(
-        holder: MenuItemListViewHolder,
+        holder: MenuItemGridViewHolder,
         position: Int,
     ) {
         holder.bind(differ.currentList[position])
