@@ -62,6 +62,12 @@ class FragmentHomePage : Fragment() {
             binding.rvMenu.apply {
                 layoutManager = GridLayoutManager(requireContext(),span)
                 adapter = this@FragmentHomePage.adapterMenu
+                binding.ibList.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_list
+                    )
+                )
             }
         }
         adapterMenu.setData(dataSource.getMenuData())
