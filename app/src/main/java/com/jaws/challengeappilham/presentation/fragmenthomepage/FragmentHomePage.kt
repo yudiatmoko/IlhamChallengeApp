@@ -3,9 +3,9 @@ package com.jaws.challengeappilham.presentation.fragmenthomepage
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
@@ -24,7 +24,7 @@ class FragmentHomePage : Fragment() {
 
     private val dataSource : MenuDataSource by lazy { MenuDataSourceImpl() }
 
-    private val adapter: MenuListAdapter by lazy {
+    private val adapterMenu: MenuListAdapter by lazy {
         MenuListAdapter(AdapterLayoutMode.LINEAR){
             menu: Menu -> navigateToDetail(menu)
         }
@@ -47,43 +47,52 @@ class FragmentHomePage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewCategory()
         setRecyclerViewMenu()
-        setModeButton()
-        popBackStack()
-    }
-
-    private fun popBackStack() {
-
-    }
-
-    private fun setModeButton() {
-        binding.switchListGrid.setOnCheckedChangeListener { _, isChecked ->
-            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (isChecked) 2 else 1
-            adapter.adapterLayoutMode = if(isChecked) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
-            adapter.refreshList()
-        }
+        setButtonMode()
     }
 
     private fun setRecyclerViewMenu() {
-
-        val span = if(adapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
-        binding.rvMenu.apply {
-            layoutManager = GridLayoutManager(requireContext(),span)
-            adapter = this@FragmentHomePage.adapter
+        if(adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR){
+            val span = 1
+            binding.rvMenu.apply {
+                layoutManager = GridLayoutManager(requireContext(),span)
+                adapter = this@FragmentHomePage.adapterMenu
+            }
         }
-        adapter.setData(dataSource.getMenuData())
-
-//        binding.rvMenu.adapter = adapter
-//        val layoutManagerMenu = FlexboxLayoutManager(requireContext())
-//        layoutManagerMenu.flexDirection = FlexDirection.ROW
-//        layoutManagerMenu.justifyContent = JustifyContent.SPACE_BETWEEN
-//        binding.rvMenu.layoutManager = layoutManagerMenu
+        adapterMenu.setData(dataSource.getMenuData())
     }
 
+    private fun setLayoutMode(){
+        if (adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR){
+            binding.ibList.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_list
+                )
+            )
+            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = 2
+            adapterMenu.adapterLayoutMode = AdapterLayoutMode.GRID
+            adapterMenu.refreshList()
+        }else{
+            binding.ibList.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_grid
+                )
+            )
+            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = 1
+            adapterMenu.adapterLayoutMode = AdapterLayoutMode.LINEAR
+            adapterMenu.refreshList()
+        }
+    }
 
+    private fun setButtonMode() {
+        binding.ibList.setOnClickListener {
+            setLayoutMode()
+        }
+    }
 
     private fun setRecyclerViewCategory() {
 
-        // Add Category List
         val categoryList = mutableListOf<Category>(
             Category(R.string.nasi, R.drawable.img_rice),
             Category(R.string.mie, R.drawable.img_noodle),
@@ -91,21 +100,14 @@ class FragmentHomePage : Fragment() {
             Category(R.string.minuman, R.drawable.img_drink)
         )
 
-        // Create Adapter
-        val recyclerViewAdapterCategory = CategoryListAdapter(categoryList)
-
-        // Create Layout Manager
+        val adapterCategory: CategoryListAdapter by lazy {
+            CategoryListAdapter(categoryList)
+        }
         val layoutManagerCategory = FlexboxLayoutManager(requireContext())
         layoutManagerCategory.flexDirection = FlexDirection.ROW
         layoutManagerCategory.justifyContent = JustifyContent.SPACE_BETWEEN
 
-        // Create RecyclerView
-        val recyclerViewCategory = binding.rvCategory
-
-        // Set LayoutManager on RecyclerView
-        recyclerViewCategory.layoutManager = layoutManagerCategory
-
-        // Set Adapter on RecyclerView
-        recyclerViewCategory.adapter = recyclerViewAdapterCategory
+        binding.rvCategory.adapter = adapterCategory
+        binding.rvCategory.layoutManager = layoutManagerCategory
     }
 }
