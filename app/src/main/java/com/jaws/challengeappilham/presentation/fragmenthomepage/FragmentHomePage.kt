@@ -57,6 +57,12 @@ class FragmentHomePage : Fragment() {
                 layoutManager = GridLayoutManager(requireContext(),span)
                 adapter = this@FragmentHomePage.adapterMenu
             }
+        }else{
+            val span = 2
+            binding.rvMenu.apply {
+                layoutManager = GridLayoutManager(requireContext(),span)
+                adapter = this@FragmentHomePage.adapterMenu
+            }
         }
         adapterMenu.setData(dataSource.getMenuData())
     }
