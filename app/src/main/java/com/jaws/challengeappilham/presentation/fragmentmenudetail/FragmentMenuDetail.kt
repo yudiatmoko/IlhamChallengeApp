@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.FragmentMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
@@ -38,6 +39,13 @@ class FragmentMenuDetail : Fragment() {
         showProfileData()
         countingClickListener()
         mapsClickListener()
+        popBackStack()
+    }
+
+    private fun popBackStack() {
+        binding.ibArrowBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun countingClickListener() {
@@ -49,18 +57,18 @@ class FragmentMenuDetail : Fragment() {
         }
     }
 
-    private fun decrementCount() {
-        count--
-        if(count<=1){
-            count=1;
-        }
+    private fun incrementCount() {
+        count++
         binding.tvAmount.setText(count.toString())
         val total = menu?.menuPrice?.toInt()!! * count
         binding.btnAddToCart.setText(getString(R.string.add_to_cart,total))
     }
 
-    private fun incrementCount() {
-        count++
+    private fun decrementCount() {
+        count--
+        if(count<=1){
+            count=1;
+        }
         binding.tvAmount.setText(count.toString())
         val total = menu?.menuPrice?.toInt()!! * count
         binding.btnAddToCart.setText(getString(R.string.add_to_cart,total))
@@ -74,8 +82,6 @@ class FragmentMenuDetail : Fragment() {
             binding.tvMenuDesc.text = menu?.menuDesc
             binding.tvLocationDetail.setText(getString(R.string.location))
             binding.btnAddToCart.setText(getString(R.string.add_to_cart, menu?.menuPrice?.toInt()))
-
-
         } else{
             Toast.makeText(requireContext(), "Menu is null", Toast.LENGTH_SHORT).show()
         }

@@ -48,6 +48,11 @@ class FragmentHomePage : Fragment() {
         setRecyclerViewCategory()
         setRecyclerViewMenu()
         setModeButton()
+        popBackStack()
+    }
+
+    private fun popBackStack() {
+
     }
 
     private fun setModeButton() {
