@@ -13,7 +13,6 @@ import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.FragmentMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
 
-
 class FragmentMenuDetail : Fragment() {
 
     private lateinit var binding: FragmentMenuDetailBinding
@@ -36,7 +35,7 @@ class FragmentMenuDetail : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showProfileData()
+        showMenuData()
         countingClickListener()
         mapsClickListener()
         popBackStack()
@@ -59,29 +58,29 @@ class FragmentMenuDetail : Fragment() {
 
     private fun incrementCount() {
         count++
-        binding.tvAmount.setText(count.toString())
+        binding.tvAmount.text = count.toString()
         val total = menu?.menuPrice?.toInt()!! * count
-        binding.btnAddToCart.setText(getString(R.string.add_to_cart,total))
+        binding.btnAddToCart.text = getString(R.string.add_to_cart,total)
     }
 
     private fun decrementCount() {
         count--
-        if(count<=1){
-            count=1;
+        if(count <= 1){
+            count = 1;
         }
-        binding.tvAmount.setText(count.toString())
+        binding.tvAmount.text = (count.toString())
         val total = menu?.menuPrice?.toInt()!! * count
-        binding.btnAddToCart.setText(getString(R.string.add_to_cart,total))
+        binding.btnAddToCart.text = getString(R.string.add_to_cart,total)
     }
 
-    private fun showProfileData() {
+    private fun showMenuData() {
         if(menu != null){
             binding.ivImgMenuItemDetail.setImageResource(menu?.menuImg!!)
             binding.tvMenuName.text = menu?.menuName
-            binding.tvMenuPrice.setText(getString(R.string.rupiah, menu?.menuPrice?.toInt()))
+            binding.tvMenuPrice.text = getString(R.string.rupiah, menu?.menuPrice?.toInt())
             binding.tvMenuDesc.text = menu?.menuDesc
-            binding.tvLocationDetail.setText(getString(R.string.location))
-            binding.btnAddToCart.setText(getString(R.string.add_to_cart, menu?.menuPrice?.toInt()))
+            binding.tvLocationDetail.text = getString(R.string.location)
+            binding.btnAddToCart.text = getString(R.string.add_to_cart, menu?.menuPrice?.toInt())
         } else{
             Toast.makeText(requireContext(), "Menu is null", Toast.LENGTH_SHORT).show()
         }
@@ -94,13 +93,8 @@ class FragmentMenuDetail : Fragment() {
     }
 
     private fun navigateToGoogleMaps() {
-        val latitude = -6.30114844371612
-        val longitude = 106.6534132153334
-
-        val mapsIntentUri = Uri.parse("geo:$latitude,$longitude")
-
-        val mapIntent = Intent(Intent.ACTION_VIEW, mapsIntentUri)
-        mapIntent.setPackage("com.google.android.apps.maps")
-        startActivity(mapIntent)
+        val mapsIntentUri = Uri.parse("https://maps.app.goo.gl/QLChXJcYJUuQWPQh8")
+        val mapsIntent = Intent(Intent.ACTION_VIEW, mapsIntentUri)
+        startActivity(mapsIntent)
     }
 }

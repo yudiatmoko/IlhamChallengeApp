@@ -20,11 +20,11 @@
         android:id="@+id/ib_arrow_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_gradient_black_linear"
         android:paddingStart="8dp"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
         android:src="@drawable/ic_arrow_back"
-        android:background="@drawable/bg_gradient_black_linear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,7 +85,7 @@
         android:id="@+id/cv_location"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@id/cl_amount"
         app:layout_constraintTop_toBottomOf="@id/cl_menu_detail">
@@ -169,11 +169,11 @@
             app:layout_constraintTop_toBottomOf="@id/view_line_2">
 
             <ImageButton
-                android:id="@+id/ic_add"
+                android:id="@+id/ic_remove"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_add_box" />
+                android:src="@drawable/ic_remove_box" />
 
             <TextView
                 android:id="@+id/tv_amount"
@@ -185,11 +185,11 @@
                 android:textColor="@color/black" />
 
             <ImageButton
-                android:id="@+id/ic_remove"
+                android:id="@+id/ic_add"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_remove_box" />
+                android:src="@drawable/ic_add_box" />
 
         </LinearLayout>
 
