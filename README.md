@@ -9,7 +9,4 @@ This app was created for submit the challenge every chapter from Binar Academy.
 
 ## Demo
 
-https://github.com/yudiatmoko/IlhamChallengeApp/assets/96367661/466fb841-2723-49c4-a952-a1849a5b1af7
-
-
-
+https://github.com/yudiatmoko/IlhamChallengeApp/assets/96367661/dd0f6e33-2d92-4a9d-a6de-cf125461bb77
