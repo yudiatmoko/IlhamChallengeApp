@@ -1,5 +1,6 @@
 package com.jaws.challengeappilham.presentation.fragmenthomepage
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.jaws.challengeappilham.data.MenuDataSourceImpl
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Category
 import com.jaws.challengeappilham.model.Menu
+import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
 
 class FragmentHomePage : Fragment() {
 
@@ -31,8 +33,11 @@ class FragmentHomePage : Fragment() {
     }
 
     private fun navigateToDetail(menu: Menu? = null) {
-        val action = FragmentHomePageDirections.actionFragmentHomePageToFragmentMenuDetail(menu)
-        findNavController().navigate(action)
+//        val action = FragmentHomePageDirections.actionFragmentHomePageToFragmentMenuDetail(menu)
+//        findNavController().navigate(action)
+        val intent = Intent(requireContext(),ActivityMenuDetail::class.java)
+        intent.putExtra("menu", menu)
+        startActivity(intent)
     }
 
     override fun onCreateView(
