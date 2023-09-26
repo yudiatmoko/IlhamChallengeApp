@@ -18,4 +18,7 @@
     <string name="counting">1</string>
     <string name="location">Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345</string>
     <string name="show_as_grid">Show as Grid</string>
+    <string name="beranda">Beranda</string>
+    <string name="keranjang">Keranjang</string>
+    <string name="profile">Profile</string>
 </resources>
