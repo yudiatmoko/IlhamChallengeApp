@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragmentHomePage"
+        android:icon="@drawable/ic_home"
+        android:title="@string/beranda" />
+    <item
+        android:id="@+id/fragmentCart"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="@string/keranjang" />
+    <item
+        android:id="@+id/fragmentProfile"
+        android:icon="@drawable/ic_account_circle"
+        android:title="@string/profile" />
+</menu>

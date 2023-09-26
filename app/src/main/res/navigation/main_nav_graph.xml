@@ -24,4 +24,14 @@
             app:argType="com.jaws.challengeappilham.model.Menu"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentProfile"
+        android:name="com.jaws.challengeappilham.presentation.fragmentprofile.FragmentProfile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/fragmentCart"
+        android:name="com.jaws.challengeappilham.presentation.fragmentcart.FragmentCart"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>
