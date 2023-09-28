@@ -27,11 +27,11 @@
 
         <LinearLayout
             android:id="@+id/ll_header_greetings"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ll_header_icon"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_profile_image"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -52,35 +52,6 @@
                 android:text="@string/mau_makan_apa_nih"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_header_icon"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="end"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ll_header_greetings"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/shopping_cart"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="10dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_shopping_cart" />
-
-            <ImageButton
-                android:id="@+id/account_circle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginHorizontal="10dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_account_circle" />
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
