@@ -7,16 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.jaws.challengeappilham.R
+import com.jaws.challengeappilham.data.CategoryDataSource
+import com.jaws.challengeappilham.data.CategoryDataSourceImpl
 import com.jaws.challengeappilham.data.MenuDataSource
 import com.jaws.challengeappilham.data.MenuDataSourceImpl
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
-import com.jaws.challengeappilham.model.Category
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
 
@@ -26,10 +26,16 @@ class FragmentHomePage : Fragment() {
 
     private val dataSource : MenuDataSource by lazy { MenuDataSourceImpl() }
 
+    private val categoryDataSource : CategoryDataSource by lazy { CategoryDataSourceImpl() }
+
     private val adapterMenu: MenuListAdapter by lazy {
         MenuListAdapter(AdapterLayoutMode.LINEAR){
             menu: Menu -> navigateToDetail(menu)
         }
+    }
+
+    private val adapterCategory: CategoryListAdapter by lazy {
+        CategoryListAdapter()
     }
 
     private fun navigateToDetail(menu: Menu? = null) {
@@ -109,22 +115,12 @@ class FragmentHomePage : Fragment() {
     }
 
     private fun setRecyclerViewCategory() {
-
-        val categoryList = mutableListOf<Category>(
-            Category(R.string.nasi, R.drawable.img_rice),
-            Category(R.string.mie, R.drawable.img_noodle),
-            Category(R.string.snack, R.drawable.img_snack),
-            Category(R.string.minuman, R.drawable.img_drink)
-        )
-
-        val adapterCategory: CategoryListAdapter by lazy {
-            CategoryListAdapter(categoryList)
+        binding.rvCategory.apply {
+            layoutManager = FlexboxLayoutManager(requireContext())
+            (layoutManager as FlexboxLayoutManager).flexDirection = FlexDirection.ROW
+            (layoutManager as FlexboxLayoutManager).justifyContent = JustifyContent.SPACE_BETWEEN
+            adapter = adapterCategory
+            adapterCategory.setData(categoryDataSource.getCategoryData())
         }
-        val layoutManagerCategory = FlexboxLayoutManager(requireContext())
-        layoutManagerCategory.flexDirection = FlexDirection.ROW
-        layoutManagerCategory.justifyContent = JustifyContent.SPACE_BETWEEN
-
-        binding.rvCategory.adapter = adapterCategory
-        binding.rvCategory.layoutManager = layoutManagerCategory
     }
 }
