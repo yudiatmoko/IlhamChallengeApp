@@ -1,33 +1,60 @@
 package com.jaws.challengeappilham.presentation.fragmenthomepage
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
-import com.jaws.challengeappilham.R
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.jaws.challengeappilham.core.ViewHolderBinder
+import com.jaws.challengeappilham.databinding.CategoryItemBinding
 import com.jaws.challengeappilham.model.Category
-class CategoryListAdapter(
-    val categoryList: List<Category>
-) : RecyclerView.Adapter<CategoryListAdapter.MyViewHolder>() {
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvCatName = itemView.findViewById<TextView>(R.id.tv_category_name)
-        val ivCatImg = itemView.findViewById<ShapeableImageView>(R.id.iv_category_image)
-    }
+class CategoryListAdapter : RecyclerView.Adapter<ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent,false)
-        return MyViewHolder(view)
-    }
+    private val differ = AsyncListDiffer(this,
+        object : DiffUtil.ItemCallback<Category>() {
+            override fun areItemsTheSame(
+                oldItem: Category,
+                newItem: Category,
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvCatName.setText(categoryList[position].catName)
-        holder.ivCatImg.setImageResource(categoryList[position].catImgSrc)
+            override fun areContentsTheSame(
+                oldItem: Category,
+                newItem: Category,
+            ): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
+        })
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
+        return CategoryItemViewHolder(
+            binding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        )
     }
 
     override fun getItemCount(): Int {
-        return categoryList.size
+        return differ.currentList.size
     }
+
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
+        (holder as ViewHolderBinder<Category>).bind(differ.currentList[position])
+    }
+
+    fun setData(data: List<Category>) {
+        differ.submitList(data)
+    }
+
+    fun refreshList() {
+        notifyItemRangeChanged(0,differ.currentList.size)
+    }
+
 }
