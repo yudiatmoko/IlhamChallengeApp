@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.data
+package com.jaws.challengeappilham.data.datasource.dummy
 
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.model.Menu
@@ -7,7 +7,7 @@ interface MenuDataSource {
     fun getMenuData() : List<Menu>
 }
 
-class MenuDataSourceImpl() : MenuDataSource{
+class MenuDataSourceImpl() : MenuDataSource {
     override fun getMenuData(): List<Menu> {
         return  mutableListOf(
             Menu(

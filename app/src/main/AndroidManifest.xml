@@ -16,7 +16,7 @@
             android:name=".presentation.activitydetail.ActivityMenuDetail"
             android:exported="false" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

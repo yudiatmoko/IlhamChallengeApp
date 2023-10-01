@@ -65,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:text="@string/ilhamyudiatmoko483"/>
 
     </LinearLayout>
@@ -91,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:text="yudiatmokoilham@gmail.com"/>
 
     </LinearLayout>
@@ -117,6 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:text="@string/ilhamganteng123"/>
 
     </LinearLayout>
@@ -144,6 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:text="@string/_6282110654834"/>
 
     </LinearLayout>
