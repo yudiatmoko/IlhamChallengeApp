@@ -7,18 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.CategoryDataSource
-import com.jaws.challengeappilham.data.CategoryDataSourceImpl
-import com.jaws.challengeappilham.data.MenuDataSource
-import com.jaws.challengeappilham.data.MenuDataSourceImpl
+import com.jaws.challengeappilham.data.datasource.dummy.CategoryDataSource
+import com.jaws.challengeappilham.data.datasource.dummy.CategoryDataSourceImpl
+import com.jaws.challengeappilham.data.datasource.dummy.MenuDataSource
+import com.jaws.challengeappilham.data.datasource.dummy.MenuDataSourceImpl
+import com.jaws.challengeappilham.data.datasource.local.datastore.UserPreferenceDataSourceImpl
+import com.jaws.challengeappilham.data.datasource.local.datastore.appDataStore
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
+import com.jaws.challengeappilham.presentation.main.MainViewModel
+import com.jaws.challengeappilham.utils.GenericViewModelFactory
+import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
 
 class FragmentHomePage : Fragment() {
 
@@ -36,6 +42,13 @@ class FragmentHomePage : Fragment() {
 
     private val adapterCategory: CategoryListAdapter by lazy {
         CategoryListAdapter()
+    }
+
+    private val viewModel: MainViewModel by viewModels{
+        val dataStore =  this.requireContext().appDataStore
+        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
+        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
+        GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
     }
 
     private fun navigateToDetail(menu: Menu? = null) {
@@ -58,59 +71,29 @@ class FragmentHomePage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewCategory()
         setRecyclerViewMenu()
-        setButtonMode()
+        setupSwitch()
     }
 
     private fun setRecyclerViewMenu() {
-        if(adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR){
-            val span = 1
-            binding.rvMenu.apply {
-                layoutManager = GridLayoutManager(requireContext(),span)
-                adapter = this@FragmentHomePage.adapterMenu
-            }
-        }else{
-            val span = 2
-            binding.rvMenu.apply {
-                layoutManager = GridLayoutManager(requireContext(),span)
-                adapter = this@FragmentHomePage.adapterMenu
-                binding.ibList.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_list
-                    )
-                )
-            }
+        val span = if(adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
+        binding.rvMenu.apply {
+            layoutManager = GridLayoutManager(requireContext(),span)
+            adapter = this@FragmentHomePage.adapterMenu
         }
         adapterMenu.setData(dataSource.getMenuData())
     }
 
-    private fun setLayoutMode(){
-        if (adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR){
-            binding.ibList.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.ic_list
-                )
-            )
-            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = 2
-            adapterMenu.adapterLayoutMode = AdapterLayoutMode.GRID
-            adapterMenu.refreshList()
-        }else{
-            binding.ibList.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.ic_grid
-                )
-            )
-            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = 1
-            adapterMenu.adapterLayoutMode = AdapterLayoutMode.LINEAR
-            adapterMenu.refreshList()
-        }
-    }
 
-    private fun setButtonMode() {
-        binding.ibList.setOnClickListener {
-            setLayoutMode()
+    private fun setupSwitch() {
+        viewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner){
+            binding.switchListGrid.isChecked = it
+        }
+
+        binding.switchListGrid.setOnCheckedChangeListener { _, isUsingLinear ->
+            viewModel.setLinearLayoutPref(isUsingLinear)
+            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
+            adapterMenu.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
+            adapterMenu.refreshList()
         }
     }
 

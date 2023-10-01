@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.data
+package com.jaws.challengeappilham.data.datasource.dummy
 
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.model.Category
@@ -7,7 +7,8 @@ interface CategoryDataSource {
     fun getCategoryData() : List<Category>
 }
 
-class CategoryDataSourceImpl() : CategoryDataSource{
+class CategoryDataSourceImpl() :
+    CategoryDataSource {
     override fun getCategoryData(): List<Category> {
         return mutableListOf(
             Category(
