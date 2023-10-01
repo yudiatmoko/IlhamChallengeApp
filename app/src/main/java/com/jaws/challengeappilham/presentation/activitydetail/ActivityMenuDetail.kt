@@ -1,13 +1,16 @@
 package com.jaws.challengeappilham.presentation.activitydetail
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
+import com.jaws.challengeappilham.utils.GenericViewModelFactory
 
 class ActivityMenuDetail : AppCompatActivity() {
 
@@ -17,22 +20,29 @@ class ActivityMenuDetail : AppCompatActivity() {
         )
     }
 
-    private val menu: Menu? by lazy {
-        intent.getParcelableExtra<Menu>("menu")
+    private val viewModel: MenuDetailViewModel by viewModels {
+        GenericViewModelFactory.create(MenuDetailViewModel(intent?.extras))
     }
-
-    private var count: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        count = 0
-
-        showMenuData()
-        countingClickListener()
-        mapsClickListener()
+        showMenuData(viewModel.menu)
         backToHomeClickListener()
+        countingClickListener()
+        observeData()
+        mapsClickListener()
+    }
+
+    private fun observeData() {
+        viewModel.priceLiveData.observe(this){
+            binding.btnAddToCart.text =  getString(R.string.add_to_cart, it.toInt())
+        }
+
+        viewModel.menuCountLiveData.observe(this){
+            binding.tvAmount.text = it.toString()
+        }
     }
 
     private fun backToHomeClickListener() {
@@ -41,63 +51,25 @@ class ActivityMenuDetail : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
     private fun countingClickListener() {
         binding.icAdd.setOnClickListener {
-            incrementCount()
+            viewModel.add()
         }
         binding.icRemove.setOnClickListener {
-            decrementCount()
+            viewModel.minus()
         }
     }
 
-    private fun incrementCount() {
-        count = (count ?: 0) + 1
-        binding.tvAmount.text = count.toString()
-        val total = (menu?.menuPrice?.toInt()
-            ?: 0) * (count ?: 0)
-        binding.btnAddToCart.text =
-            getString(R.string.add_to_cart, total)
-    }
-
-    private fun decrementCount() {
-        count = (count ?: 0) - 1
-        if ((count ?: 0) <= 0) return
-        binding.tvAmount.text = (count.toString())
-        val total = (menu?.menuPrice?.toInt()
-            ?: 0) * (count ?: 0)
-        binding.btnAddToCart.text =
-            getString(R.string.add_to_cart, total)
-    }
-
-    private fun showMenuData() {
-        if (menu != null) {
+    private fun showMenuData(menu: Menu?) {
+        menu?.let {
             binding.ivImgMenuItemDetail.setImageResource(
-                menu?.menuImg!!
+                menu?.menuImg ?: 0
             )
-            binding.tvMenuName.text =
-                menu?.menuName
-            binding.tvMenuPrice.text = getString(
-                R.string.rupiah,
-                menu?.menuPrice?.toInt()
-            )
-            binding.tvMenuDesc.text =
-                menu?.menuDesc
-            binding.tvLocationDetail.text =
-                getString(R.string.location)
-            binding.btnAddToCart.text = getString(
-                R.string.add_to_cart,
-                menu?.menuPrice?.toInt()
-            )
-        } else {
-            Toast.makeText(
-                this,
-                "Menu is null",
-                Toast.LENGTH_SHORT
-            ).show()
+            binding.tvMenuName.text = menu?.menuName
+            binding.tvMenuPrice.text = getString(R.string.rupiah, menu?.menuPrice?.toInt())
+            binding.tvMenuDesc.text = menu?.menuDesc
+            binding.tvLocationDetail.text = getString(R.string.location)
+            binding.btnAddToCart.text = getString(R.string.add_to_cart, menu?.menuPrice?.toInt())
         }
     }
 
@@ -115,5 +87,14 @@ class ActivityMenuDetail : AppCompatActivity() {
             mapsIntentUri
         )
         startActivity(mapsIntent)
+    }
+
+    companion object {
+        const val EXTRA_PRODUCT = "EXTRA_PRODUCT"
+        fun startActivity(context: Context, menu: Menu) {
+            val intent = Intent(context, ActivityMenuDetail::class.java)
+            intent.putExtra(EXTRA_PRODUCT, menu)
+            context.startActivity(intent)
+        }
     }
 }
