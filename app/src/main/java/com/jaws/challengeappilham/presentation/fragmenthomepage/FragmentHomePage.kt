@@ -51,12 +51,10 @@ class FragmentHomePage : Fragment() {
         GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
     }
 
-    private fun navigateToDetail(menu: Menu? = null) {
+    private fun navigateToDetail(menu: Menu) {
 //        val action = FragmentHomePageDirections.actionFragmentHomePageToFragmentMenuDetail(menu)
 //        findNavController().navigate(action)
-        val intent = Intent(requireContext(),ActivityMenuDetail::class.java)
-        intent.putExtra("menu", menu)
-        startActivity(intent)
+        ActivityMenuDetail.startActivity(requireContext(), menu)
     }
 
     override fun onCreateView(
