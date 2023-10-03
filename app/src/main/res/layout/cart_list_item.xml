@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_menu_img"
+        android:layout_width="102dp"
+        android:layout_height="102dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@id/ll_menu_name_and_price"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ll_menu_name_and_price"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+        tools:src="@drawable/img_chicken_satay" />
+
+    <LinearLayout
+        android:id="@+id/ll_menu_name_and_price"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/ll_amount_controller"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_menu_img"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_menu_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/inter"
+            android:textAlignment="textStart"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="@tools:sample/full_names" />
+
+        <TextView
+            android:id="@+id/tv_menu_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/inter"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="@tools:sample/us_phones" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_amount_controller"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/et_notes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_menu_img"
+        app:layout_constraintTop_toBottomOf="@id/ll_menu_name_and_price">
+
+        <ImageButton
+            android:id="@+id/ic_remove"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_remove_box" />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:text="@string/counting"
+            android:textColor="@color/black" />
+
+        <ImageButton
+            android:id="@+id/ic_add"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add_box" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ic_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintBottom_toBottomOf="@id/ll_amount_controller"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ll_amount_controller" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_notes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/catatan"
+        android:background="@drawable/textview_rounded_corner"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ll_amount_controller"
+        app:layout_constraintTop_toBottomOf="@id/ll_amount_controller" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/md_theme_dark_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_notes" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

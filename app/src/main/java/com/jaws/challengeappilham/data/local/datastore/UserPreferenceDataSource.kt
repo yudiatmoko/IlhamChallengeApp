@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.data.datasource.local.datastore
+package com.jaws.challengeappilham.data.local.datastore
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import com.jaws.challengeappilham.utils.PreferenceDataStoreHelper
@@ -12,7 +12,7 @@ interface UserPreferenceDataSource {
 
 class UserPreferenceDataSourceImpl(
     private val preferenceDataStoreHelper: PreferenceDataStoreHelper
-) : UserPreferenceDataSource{
+) : UserPreferenceDataSource {
     override fun getUserLayoutPrefFlow(): Flow<Boolean> {
         return preferenceDataStoreHelper.getPreference(
             PREF_USER_LINEAR_LAYOUT, true

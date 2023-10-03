@@ -1,24 +1,21 @@
 package com.jaws.challengeappilham.presentation.fragmenthomepage
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.datasource.dummy.CategoryDataSource
-import com.jaws.challengeappilham.data.datasource.dummy.CategoryDataSourceImpl
-import com.jaws.challengeappilham.data.datasource.dummy.MenuDataSource
-import com.jaws.challengeappilham.data.datasource.dummy.MenuDataSourceImpl
-import com.jaws.challengeappilham.data.datasource.local.datastore.UserPreferenceDataSourceImpl
-import com.jaws.challengeappilham.data.datasource.local.datastore.appDataStore
+import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSource
+import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSourceImpl
+import com.jaws.challengeappilham.data.dummy.DummyMenuDataSource
+import com.jaws.challengeappilham.data.dummy.DummyMenuDataSourceImpl
+import com.jaws.challengeappilham.data.local.datastore.UserPreferenceDataSourceImpl
+import com.jaws.challengeappilham.data.local.datastore.appDataStore
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
@@ -30,9 +27,9 @@ class FragmentHomePage : Fragment() {
 
     private lateinit var binding: FragmentHomePageBinding
 
-    private val dataSource : MenuDataSource by lazy { MenuDataSourceImpl() }
+    private val dataSource : DummyMenuDataSource by lazy { DummyMenuDataSourceImpl() }
 
-    private val categoryDataSource : CategoryDataSource by lazy { CategoryDataSourceImpl() }
+    private val dummyCategoryDataSource : DummyCategoryDataSource by lazy { DummyCategoryDataSourceImpl() }
 
     private val adapterMenu: MenuListAdapter by lazy {
         MenuListAdapter(AdapterLayoutMode.LINEAR){
@@ -101,7 +98,7 @@ class FragmentHomePage : Fragment() {
             (layoutManager as FlexboxLayoutManager).flexDirection = FlexDirection.ROW
             (layoutManager as FlexboxLayoutManager).justifyContent = JustifyContent.SPACE_BETWEEN
             adapter = adapterCategory
-            adapterCategory.setData(categoryDataSource.getCategoryData())
+            adapterCategory.setData(dummyCategoryDataSource.getCategoryData())
         }
     }
 }

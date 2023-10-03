@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.data.datasource.local.datastore
+package com.jaws.challengeappilham.data.local.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore

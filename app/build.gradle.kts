@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -58,6 +59,9 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
 
+    //coil
+    implementation("io.coil-kt:coil:2.4.0")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
     //ktx lifecycle
@@ -70,4 +74,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     //data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+    //room database libraries
+    implementation("androidx.room:room-ktx:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jaws.challengeappilham.databinding.FragmentProfileBinding
+import com.jaws.challengeappilham.presentation.main.MainActivity
 
 class FragmentProfile : Fragment() {
 
