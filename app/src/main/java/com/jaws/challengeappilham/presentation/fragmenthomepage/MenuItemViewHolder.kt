@@ -1,6 +1,9 @@
 package com.jaws.challengeappilham.presentation.fragmenthomepage
 
+import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.MenuGridItemBinding
 import com.jaws.challengeappilham.databinding.MenuListItemBinding
@@ -14,9 +17,9 @@ class MenuItemGridViewHolder(
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
-        binding.ivMenuImage.setImageResource(item.menuImg)
+        binding.ivMenuImage.load(item.menuImg)
         binding.tvMenuName.text = item.menuName
-        binding.tvMenuPrice.text = "Rp. ${item.menuPrice.toInt()}"
+        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.menuPrice)
     }
 }
 
@@ -28,8 +31,8 @@ class MenuItemLinearViewHolder(
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
-        binding.ivMenuImg.setImageResource(item.menuImg)
+        binding.ivMenuImg.load(item.menuImg)
         binding.tvMenuName.text = item.menuName
-        binding.tvMenuPrice.text = "Rp. ${item.menuPrice.toInt()}"
+        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.menuPrice)
     }
 }

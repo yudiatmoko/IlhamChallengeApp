@@ -29,5 +29,4 @@ class MenuDetailViewModel(private val extras: Bundle?) : ViewModel(){
             priceLiveData.postValue(menu?.menuPrice?.times(count) ?: 0.0)
         }
     }
-
 }

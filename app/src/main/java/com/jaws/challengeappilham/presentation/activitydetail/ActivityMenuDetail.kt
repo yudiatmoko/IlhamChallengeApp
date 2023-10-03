@@ -3,10 +3,10 @@ package com.jaws.challengeappilham.presentation.activitydetail
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
@@ -62,14 +62,12 @@ class ActivityMenuDetail : AppCompatActivity() {
 
     private fun showMenuData(menu: Menu?) {
         menu?.let {
-            binding.ivImgMenuItemDetail.setImageResource(
-                menu?.menuImg ?: 0
-            )
-            binding.tvMenuName.text = menu?.menuName
-            binding.tvMenuPrice.text = getString(R.string.rupiah, menu?.menuPrice?.toInt())
-            binding.tvMenuDesc.text = menu?.menuDesc
+            binding.ivImgMenuItemDetail.load(it.menuImg)
+            binding.tvMenuName.text = it.menuName
+            binding.tvMenuPrice.text = String.format("Rp. %,.0f", it.menuPrice)
+            binding.tvMenuDesc.text = it.menuDesc
             binding.tvLocationDetail.text = getString(R.string.location)
-            binding.btnAddToCart.text = getString(R.string.add_to_cart, menu?.menuPrice?.toInt())
+            binding.btnAddToCart.text = getString(R.string.add_to_cart, it.menuPrice.toInt())
         }
     }
 

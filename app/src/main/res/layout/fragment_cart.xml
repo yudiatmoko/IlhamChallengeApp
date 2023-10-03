@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.fragmentprofile.FragmentProfile">
+    tools:context=".presentation.fragmentcart.FragmentCart">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -12,14 +12,23 @@
         android:layout_height="wrap_content"
         android:background="@color/md_theme_light_surface"
         android:elevation="1dp"
-        app:titleTextColor="@color/md_theme_light_primary"
-        app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/keranjang"
-        app:titleCentered="true" />
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge"
+        app:titleTextColor="@color/md_theme_light_primary" />
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_cart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="16dp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:itemCount="4"
+        tools:listitem="@layout/cart_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

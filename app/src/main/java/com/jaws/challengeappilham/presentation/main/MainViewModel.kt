@@ -3,7 +3,7 @@ package com.jaws.challengeappilham.presentation.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.jaws.challengeappilham.data.datasource.local.datastore.UserPreferenceDataSource
+import com.jaws.challengeappilham.data.local.datastore.UserPreferenceDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
