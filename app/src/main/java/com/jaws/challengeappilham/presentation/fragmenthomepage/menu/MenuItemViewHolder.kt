@@ -1,9 +1,7 @@
-package com.jaws.challengeappilham.presentation.fragmenthomepage
+package com.jaws.challengeappilham.presentation.fragmenthomepage.menu
 
-import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.MenuGridItemBinding
 import com.jaws.challengeappilham.databinding.MenuListItemBinding
