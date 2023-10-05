@@ -81,6 +81,26 @@ class DatabaseSeederCallback(private val context: Context) : RoomDatabase.Callba
                 menuId = 2,
                 itemNotes = "Barang yang fresh yaaaaaa",
                 itemQuantity = 2
+            ),CartEntity(
+                id = 3,
+                menuId = 3,
+                itemNotes = "Barang yang fresh yaaaaaa",
+                itemQuantity = 2
+            ),CartEntity(
+                id = 4,
+                menuId = 4,
+                itemNotes = "Barang yang fresh yaaaaaa",
+                itemQuantity = 2
+            ),CartEntity(
+                id = 5,
+                menuId = 5,
+                itemNotes = "Barang yang fresh yaaaaaa",
+                itemQuantity = 2
+            ),CartEntity(
+                id = 6,
+                menuId = 6,
+                itemNotes = "Barang yang fresh yaaaaaa",
+                itemQuantity = 2
             ),
         )
     }

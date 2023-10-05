@@ -1,17 +1,18 @@
 package com.jaws.challengeappilham.presentation.fragmentcart
 
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.CartListItemBinding
+import com.jaws.challengeappilham.databinding.CheckoutListItemBinding
 import com.jaws.challengeappilham.model.Cart
 import com.jaws.challengeappilham.model.CartMenu
+import com.jaws.challengeappilham.utils.doneEditing
 
 class CartItemViewHolder(
     private val binding: CartListItemBinding,
-    private val cartListener: CartListener,
+    private val cartListener: CartListener?,
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<CartMenu> {
 
     override fun bind(item: CartMenu) {
@@ -22,43 +23,61 @@ class CartItemViewHolder(
 
     private fun setClickListener(item: CartMenu) {
         binding.apply {
-            icAdd.setOnClickListener { cartListener.onMinusTotalItemCartClicked(item.cart) }
-            icDelete.setOnClickListener { cartListener.onPlusTotalItemCartClicked(item.cart) }
-            icRemove.setOnClickListener { cartListener.onRemoveCartClicked(item.cart) }
-            itemView.setOnClickListener { cartListener.onCartClicked(item) }
+            icAdd.setOnClickListener { cartListener?.onPlusTotalItemCartClicked(item.cart) }
+            icRemove.setOnClickListener { cartListener?.onMinusTotalItemCartClicked(item.cart) }
+            icDelete.setOnClickListener { cartListener?.onRemoveCartClicked(item.cart) }
+            itemView.setOnClickListener { cartListener?.onCartClicked(item) }
         }
     }
 
     private fun setCartNotes(item: CartMenu) {
         binding.etNotes.setText(item.cart.itemNotes)
-        binding.etNotes.setOnEditorActionListener{_, action, event ->
-            if (action == EditorInfo.IME_ACTION_SEARCH ||
-                action == EditorInfo.IME_ACTION_DONE ||
-                event != null &&
-                event.action == KeyEvent.ACTION_DOWN &&
-                event.keyCode == KeyEvent.KEYCODE_ENTER){
-                if (event == null || !event.isShiftPressed) {
-                    // the user is done typing.
-                    val newItem = item.cart.apply {
-                        itemNotes = binding.etNotes.text.toString().trim()
-                    }
-                    cartListener.onUserDoneEditingNotes(newItem)
-                    return@setOnEditorActionListener true
-                }
+        binding.etNotes.doneEditing {
+            binding.etNotes.clearFocus()
+            val newItem = item.cart.copy().apply {
+                itemNotes = binding.etNotes.text.toString().trim()
             }
-            return@setOnEditorActionListener true
+            cartListener?.onUserDoneEditingNotes(newItem)
         }
     }
 
     private fun setCartData(item: CartMenu) {
         binding.apply {
-            binding.ivMenuImg.load(item.menu.menuImg){crossfade(true)}
+            ivMenuImg.load(item.menu.menuImg){crossfade(true)}
+            tvMenuName.text = item.menu.menuName
+            tvMenuPrice.text = String.format("Rp. %,.0f", (item.menu.menuPrice * item.cart.itemQuantity))
+            tvAmount.text = item.cart.itemQuantity.toString()
         }
-        binding.tvMenuName.text = item.menu.menuName
-        binding.tvMenuPrice.text = String.format("Rp. %,.0f", (item.menu.menuPrice * item.cart.itemQuantity))
-        binding.tvAmount.text = item.cart.itemQuantity.toString()
     }
 
+}
+
+class CheckoutViewHolder(
+    private val binding: CheckoutListItemBinding,
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<CartMenu> {
+    override fun bind(item: CartMenu) {
+        setCartData(item)
+        setCartNotes(item)
+    }
+
+    private fun setCartData(item: CartMenu) {
+        with(binding) {
+            binding.ivMenuImg.load(item.menu.menuImg) {
+                crossfade(true)
+            }
+            tvTotalItem.text =
+                itemView.rootView.context.getString(
+                    R.string.total_qty,
+                    item.cart.itemQuantity.toString()
+                )
+            tvMenuName.text = item.menu.menuName
+            tvMenuPrice.text = (item.cart.itemQuantity * item.menu.menuPrice).toString()
+        }
+    }
+
+    private fun setCartNotes(item: CartMenu) {
+        binding.tvNotes.text = item.cart.itemNotes
+    }
 }
 
 interface CartListener{
@@ -66,5 +85,5 @@ interface CartListener{
     fun onPlusTotalItemCartClicked(cart: Cart)
     fun onMinusTotalItemCartClicked(cart: Cart)
     fun onRemoveCartClicked(cart: Cart)
-    fun onUserDoneEditingNotes(newCart: Cart)
+    fun onUserDoneEditingNotes(cart: Cart)
 }
