@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.CartListItemBinding
+import com.jaws.challengeappilham.databinding.CheckoutListItemBinding
 import com.jaws.challengeappilham.model.CartMenu
 
 class CartListAdapter(
-    private val cartListener: CartListener
-) : RecyclerView.Adapter<CartItemViewHolder>()
+    private val cartListener: CartListener? = null
+) : RecyclerView.Adapter<ViewHolder>()
 {
     private val dataDiffer = AsyncListDiffer(this, object : DiffUtil.ItemCallback<CartMenu>() {
             override fun areItemsTheSame(
@@ -33,11 +35,15 @@ class CartListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): CartItemViewHolder {
-        return CartItemViewHolder(
+    ): ViewHolder {
+        return if (cartListener != null) CartItemViewHolder(
             CartListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), cartListener
+        ) else CheckoutViewHolder(
+            CheckoutListItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
     }
 
@@ -48,7 +54,7 @@ class CartListAdapter(
     override fun getItemCount(): Int = dataDiffer.currentList.size
 
     override fun onBindViewHolder(
-        holder: CartItemViewHolder,
+        holder: ViewHolder,
         position: Int,
     ) {
         (holder as ViewHolderBinder<CartMenu>).bind(dataDiffer.currentList[position])

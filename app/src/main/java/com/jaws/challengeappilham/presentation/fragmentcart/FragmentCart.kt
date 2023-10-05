@@ -1,5 +1,6 @@
 package com.jaws.challengeappilham.presentation.fragmentcart
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,19 +30,19 @@ class FragmentCart : Fragment() {
             }
 
             override fun onPlusTotalItemCartClicked(cart: Cart) {
-
+                viewModel.increaseCart(cart)
             }
 
             override fun onMinusTotalItemCartClicked(cart: Cart) {
-
+                viewModel.decreaseCart(cart)
             }
 
             override fun onRemoveCartClicked(cart: Cart) {
-
+                viewModel.deleteCart(cart)
             }
 
             override fun onUserDoneEditingNotes(newCart: Cart) {
-
+                viewModel.updateNotes(newCart)
             }
         })
     }
@@ -75,12 +76,20 @@ class FragmentCart : Fragment() {
 
         setupCartList()
         observeData()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+
     }
 
     private fun observeData() {
         viewModel.cartList.observe(viewLifecycleOwner) {
             it.proceedWhen(doOnSuccess = { result ->
-                result.payload?.let { data -> cartListAdapter.submitData(data) }
+                result.payload?.let { (carts, totalPrice) ->
+                    cartListAdapter.submitData(carts)
+                    binding.tvTotalPriceAmount.text = String.format("Rp. %,.0f", totalPrice)
+                }
             })
         }
     }

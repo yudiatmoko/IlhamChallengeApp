@@ -14,22 +14,11 @@ Written with love by Muhammad Hermas Yuda Pamungkas
 Github : https://github.com/hermasyp
  **/
 interface MenuDataSource {
-
-    @Query("SELECT * FROM MENUS")
     fun getAllMenus(): Flow<List<MenuEntity>>
-
-    @Query("SELECT * FROM MENUS WHERE id == :id")
     fun getMenuById(id: Int): Flow<MenuEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMenus(product: List<MenuEntity>)
-
-    @Delete
     suspend fun deleteMenu(product: MenuEntity): Int
-
-    @Update
     suspend fun updateMenu(product: MenuEntity): Int
-
 }
 
 class MenuDatabaseDataSource(private val dao : MenuDao) : MenuDataSource {

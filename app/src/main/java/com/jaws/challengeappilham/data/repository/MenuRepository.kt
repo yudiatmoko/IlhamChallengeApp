@@ -27,9 +27,6 @@ class MenuRepositoryImpl(
     }
 
     override fun getProducts(): Flow<ResultWrapper<List<Menu>>> {
-        return menuDataSource.getAllMenus().map { proceed { it.toMenuList() } }.onStart {
-            emit(ResultWrapper.Loading())
-            delay(2000)
-        }
+        return menuDataSource.getAllMenus().map { proceed { it.toMenuList() } }
     }
 }

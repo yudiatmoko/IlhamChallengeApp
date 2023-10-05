@@ -4,13 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.jaws.challengeappilham.R
+import com.jaws.challengeappilham.data.local.database.AppDatabase
+import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
+import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDataSource
+import com.jaws.challengeappilham.data.repository.CartRepository
+import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
+import com.jaws.challengeappilham.utils.proceedWhen
 
 class ActivityMenuDetail : AppCompatActivity() {
 
@@ -21,13 +28,17 @@ class ActivityMenuDetail : AppCompatActivity() {
     }
 
     private val viewModel: MenuDetailViewModel by viewModels {
-        GenericViewModelFactory.create(MenuDetailViewModel(intent?.extras))
+        val database = AppDatabase.getInstance(this)
+        val cartDao = database.cartDao()
+        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource)
+        GenericViewModelFactory.create(MenuDetailViewModel(intent?.extras, repo)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         showMenuData(viewModel.menu)
         backToHomeClickListener()
         countingClickListener()
@@ -43,6 +54,16 @@ class ActivityMenuDetail : AppCompatActivity() {
         viewModel.menuCountLiveData.observe(this){
             binding.tvAmount.text = it.toString()
         }
+
+        viewModel.addToCartResult.observe(this) {
+            it.proceedWhen(
+                doOnSuccess = {
+                    Toast.makeText(this, "Add to cart success !", Toast.LENGTH_SHORT).show()
+                    finish()
+                }, doOnError = {
+                    Toast.makeText(this, it.exception?.message.orEmpty(), Toast.LENGTH_SHORT).show()
+                })
+        }
     }
 
     private fun backToHomeClickListener() {
@@ -57,6 +78,9 @@ class ActivityMenuDetail : AppCompatActivity() {
         }
         binding.icRemove.setOnClickListener {
             viewModel.minus()
+        }
+        binding.btnAddToCart.setOnClickListener{
+            viewModel.addToCart()
         }
     }
 
