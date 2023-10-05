@@ -12,8 +12,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSource
 import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSourceImpl
-import com.jaws.challengeappilham.data.dummy.DummyMenuDataSource
-import com.jaws.challengeappilham.data.dummy.DummyMenuDataSourceImpl
 import com.jaws.challengeappilham.data.local.database.AppDatabase
 import com.jaws.challengeappilham.data.local.database.datasource.MenuDatabaseDataSource
 import com.jaws.challengeappilham.data.local.datastore.UserPreferenceDataSourceImpl
@@ -23,6 +21,8 @@ import com.jaws.challengeappilham.data.repository.MenuRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
+import com.jaws.challengeappilham.presentation.fragmenthomepage.category.CategoryListAdapter
+import com.jaws.challengeappilham.presentation.fragmenthomepage.menu.MenuListAdapter
 import com.jaws.challengeappilham.presentation.main.MainViewModel
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
