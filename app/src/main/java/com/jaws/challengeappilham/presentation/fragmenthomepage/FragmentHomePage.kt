@@ -14,8 +14,12 @@ import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSource
 import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSourceImpl
 import com.jaws.challengeappilham.data.dummy.DummyMenuDataSource
 import com.jaws.challengeappilham.data.dummy.DummyMenuDataSourceImpl
+import com.jaws.challengeappilham.data.local.database.AppDatabase
+import com.jaws.challengeappilham.data.local.database.datasource.MenuDatabaseDataSource
 import com.jaws.challengeappilham.data.local.datastore.UserPreferenceDataSourceImpl
 import com.jaws.challengeappilham.data.local.datastore.appDataStore
+import com.jaws.challengeappilham.data.repository.MenuRepository
+import com.jaws.challengeappilham.data.repository.MenuRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
@@ -26,8 +30,6 @@ import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
 class FragmentHomePage : Fragment() {
 
     private lateinit var binding: FragmentHomePageBinding
-
-    private val dataSource : DummyMenuDataSource by lazy { DummyMenuDataSourceImpl() }
 
     private val dummyCategoryDataSource : DummyCategoryDataSource by lazy { DummyCategoryDataSourceImpl() }
 
@@ -46,6 +48,15 @@ class FragmentHomePage : Fragment() {
         val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
         val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
         GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
+    }
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        val cds: DummyCategoryDataSource = DummyCategoryDataSourceImpl()
+        val database = AppDatabase.getInstance(requireContext())
+        val menuDao = database.menuDao()
+        val menuDataSource = MenuDatabaseDataSource(menuDao)
+        val repo: MenuRepository = MenuRepositoryImpl(menuDataSource, cds)
+        GenericViewModelFactory.create(HomeViewModel(repo))
     }
 
     private fun navigateToDetail(menu: Menu) {
@@ -75,9 +86,10 @@ class FragmentHomePage : Fragment() {
             layoutManager = GridLayoutManager(requireContext(),span)
             adapter = this@FragmentHomePage.adapterMenu
         }
-        adapterMenu.setData(dataSource.getMenuData())
+        homeViewModel.menuData.observe(viewLifecycleOwner){
+            adapterMenu.setData(it)
+        }
     }
-
 
     private fun setupSwitch() {
         viewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner){
@@ -88,7 +100,9 @@ class FragmentHomePage : Fragment() {
             viewModel.setLinearLayoutPref(isUsingLinear)
             (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
             adapterMenu.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
-            adapterMenu.refreshList()
+            homeViewModel.menuData.observe(viewLifecycleOwner){
+                adapterMenu.setData(it)
+            }
         }
     }
 
