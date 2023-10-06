@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.CartRepository
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.ResultWrapper
+import kotlinx.coroutines.launch
 
 class MenuDetailViewModel(
     private val extras: Bundle?,
@@ -40,6 +42,14 @@ class MenuDetailViewModel(
     }
 
     fun addToCart() {
-
+        viewModelScope.launch {
+            val qty =
+                if ((menuCountLiveData.value ?: 0) <= 0) 1 else menuCountLiveData.value ?: 0
+            menu?.let {
+                cartRepository.createCart(it, qty).collect { result ->
+                    _addToCartResult.postValue(result)
+                }
+            }
+        }
     }
 }
