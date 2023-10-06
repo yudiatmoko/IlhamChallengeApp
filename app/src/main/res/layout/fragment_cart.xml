@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:textColor="@color/black"
-                android:text="@string/total_price"
+                android:text="@string/total_harga"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_total_price_amount"
                 app:layout_constraintEnd_toStartOf="@id/btn_checkout"
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_rounded_corner"
-                android:text="Checkout"
+                android:text="@string/checkout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

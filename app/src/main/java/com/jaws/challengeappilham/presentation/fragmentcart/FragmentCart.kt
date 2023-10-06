@@ -17,6 +17,7 @@ import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentCartBinding
 import com.jaws.challengeappilham.model.Cart
 import com.jaws.challengeappilham.model.CartMenu
+import com.jaws.challengeappilham.presentation.activitycheckout.CheckoutActivity
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
 
@@ -96,7 +97,9 @@ class FragmentCart : Fragment() {
     }
 
     private fun setClickListener() {
-
+        binding.btnCheckout.setOnClickListener {
+            context?.startActivity(Intent(requireContext(), CheckoutActivity::class.java))
+        }
     }
 
     private fun observeData() {
@@ -143,6 +146,7 @@ class FragmentCart : Fragment() {
                         false
                     binding.layoutState.tvError.isVisible =
                         true
+                    binding.btnCheckout.isClickable = false
                     binding.layoutState.tvError.text =
                         getString(R.string.no_data_text)
                     result.payload?.let { (_, totalPrice) ->
@@ -152,6 +156,18 @@ class FragmentCart : Fragment() {
                                 totalPrice
                             )
                     }
+                },
+                doOnError = { err ->
+                    binding.layoutState.root.isVisible =
+                        true
+                    binding.layoutState.pbLoading.isVisible =
+                        false
+                    binding.layoutState.tvError.isVisible =
+                        true
+                    binding.layoutState.tvError.text =
+                        err.exception?.message.orEmpty()
+                    binding.rvCart.isVisible =
+                        false
                 }
             )
         }

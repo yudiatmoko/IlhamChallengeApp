@@ -71,7 +71,7 @@ class CheckoutViewHolder(
                     item.cart.itemQuantity.toString()
                 )
             tvMenuName.text = item.menu.menuName
-            tvMenuPrice.text = (item.cart.itemQuantity * item.menu.menuPrice).toString()
+            tvMenuPrice.text = String.format("Rp. %,.0f", (item.menu.menuPrice * item.cart.itemQuantity))
         }
     }
 

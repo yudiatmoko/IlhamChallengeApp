@@ -23,7 +23,7 @@
         android:layout_marginStart="8dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/et_notes"
+        app:layout_constraintBottom_toTopOf="@id/tv_notes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_menu_img"
         app:layout_constraintTop_toTopOf="parent">
@@ -54,9 +54,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/inter"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textAlignment="textEnd"
+            android:textColor="@color/md_theme_light_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="x6" />
 
     </LinearLayout>
