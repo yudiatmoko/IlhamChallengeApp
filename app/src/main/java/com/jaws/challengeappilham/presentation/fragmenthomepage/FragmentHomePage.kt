@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.map
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSource
 import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSourceImpl
 import com.jaws.challengeappilham.data.local.database.AppDatabase
@@ -26,6 +29,8 @@ import com.jaws.challengeappilham.presentation.fragmenthomepage.menu.MenuListAda
 import com.jaws.challengeappilham.presentation.main.MainViewModel
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
+import com.jaws.challengeappilham.utils.proceed
+import com.jaws.challengeappilham.utils.proceedWhen
 
 class FragmentHomePage : Fragment() {
 
@@ -80,15 +85,48 @@ class FragmentHomePage : Fragment() {
         setupSwitch()
     }
 
+    private fun setObserveData() {
+        homeViewModel.menuData.observe(viewLifecycleOwner){
+            it.proceedWhen(
+                doOnSuccess = { result ->
+                    binding.layoutState.root.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = false
+                    binding.rvMenu.isVisible = true
+                    result.payload?.let {
+                        adapterMenu.setData(it)
+                    }
+                },
+                doOnLoading = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                    binding.rvMenu.isVisible = false
+                },
+                doOnError = { err ->
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = err.exception?.message.orEmpty()
+                    binding.rvMenu.isVisible = false
+                }, doOnEmpty = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = getString(R.string.no_data_text)
+                    binding.rvMenu.isVisible = false
+                }
+            )
+        }
+    }
+
     private fun setRecyclerViewMenu() {
         val span = if(adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
         binding.rvMenu.apply {
             layoutManager = GridLayoutManager(requireContext(),span)
             adapter = this@FragmentHomePage.adapterMenu
         }
-        homeViewModel.menuData.observe(viewLifecycleOwner){
-            adapterMenu.setData(it)
-        }
+        setObserveData()
     }
 
     private fun setupSwitch() {
@@ -100,9 +138,7 @@ class FragmentHomePage : Fragment() {
             viewModel.setLinearLayoutPref(isUsingLinear)
             (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
             adapterMenu.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
-            homeViewModel.menuData.observe(viewLifecycleOwner){
-                adapterMenu.setData(it)
-            }
+            setObserveData()
         }
     }
 
