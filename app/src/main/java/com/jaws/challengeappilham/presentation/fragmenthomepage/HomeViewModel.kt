@@ -13,4 +13,6 @@ class HomeViewModel(private val repo: MenuRepository) : ViewModel() {
 
     val menuData : LiveData<ResultWrapper<List<Menu>>>
         get() = repo.getMenus().asLiveData(Dispatchers.IO)
+
 }
+

@@ -146,7 +146,6 @@ class FragmentCart : Fragment() {
                         false
                     binding.layoutState.tvError.isVisible =
                         true
-                    binding.btnCheckout.isClickable = false
                     binding.layoutState.tvError.text =
                         getString(R.string.no_data_text)
                     result.payload?.let { (_, totalPrice) ->

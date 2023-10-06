@@ -18,20 +18,18 @@
     <string name="add_to_cart" formatted="false">Tambah ke Keranjang - Rp. %d</string>
     <string name="counting">1</string>
     <string name="location">Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345</string>
-    <string name="show_as_grid">Show as Grid</string>
     <string name="beranda">Beranda</string>
     <string name="keranjang">Keranjang</string>
-    <string name="profile">Profile</string>
-    <string name="username">Username</string>
+    <string name="profile">Profil</string>
+    <string name="username">Nama Pengguna</string>
     <string name="e_mail">E-mail</string>
     <string name="ilhamyudiatmoko483">ilhamyudiatmoko483</string>
-    <string name="password">Password</string>
+    <string name="password">Kata Sandi</string>
     <string name="ilhamganteng123">ilhamganteng123</string>
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="_6282110654834">+6282110654834</string>
     <string name="catatan">Catatan</string>
     <string name="total_harga">Total Harga</string>
-    <string name="total_price">Total Price</string>
     <string name="no_data_text">Tidak Ada Data</string>
     <string name="checkout">Checkout</string>
     <string name="metode_pembayaran">Metode Pengiriman</string>

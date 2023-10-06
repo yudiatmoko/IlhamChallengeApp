@@ -1,5 +1,6 @@
 package com.jaws.challengeappilham.data.repository
 
+import android.os.AsyncTask
 import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
 import com.jaws.challengeappilham.data.local.database.entity.CartEntity
 import com.jaws.challengeappilham.data.local.database.mapper.toCartEntity
@@ -23,6 +24,7 @@ interface CartRepository {
     suspend fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun setCartNotes(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
+    suspend fun deleteAll()
 }
 
 class CartRepositoryImpl(
@@ -90,5 +92,9 @@ class CartRepositoryImpl(
 
     override suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.deleteCart(item.toCartEntity()) > 0 }
+    }
+
+    override suspend fun deleteAll() {
+        dataSource.deleteAll()
     }
 }
