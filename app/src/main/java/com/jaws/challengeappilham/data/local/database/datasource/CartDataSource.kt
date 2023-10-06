@@ -1,5 +1,6 @@
 package com.jaws.challengeappilham.data.local.database.datasource
 
+import android.os.AsyncTask
 import com.jaws.challengeappilham.data.local.database.dao.CartDao
 import com.jaws.challengeappilham.data.local.database.entity.CartEntity
 import com.jaws.challengeappilham.data.local.database.relation.CartMenuRelation
@@ -11,6 +12,8 @@ interface CartDataSource {
     suspend fun insertCart(cart: CartEntity) : Long
     suspend fun deleteCart(cart: CartEntity): Int
     suspend fun updateCart(cart: CartEntity): Int
+    suspend fun deleteAll()
+
 }
 
 class CartDatabaseDataSource(private val cartDao: CartDao) : CartDataSource {
@@ -32,5 +35,9 @@ class CartDatabaseDataSource(private val cartDao: CartDao) : CartDataSource {
 
     override suspend fun updateCart(cart: CartEntity): Int {
         return cartDao.updateCart(cart)
+    }
+
+    override suspend fun deleteAll() {
+        return cartDao.deleteAll()
     }
 }

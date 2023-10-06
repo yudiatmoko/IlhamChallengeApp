@@ -18,6 +18,9 @@ interface CartDao{
     @Query("SELECT * FROM CARTS WHERE id == :cartId")
     fun getCartById(cartId: Int): Flow<CartMenuRelation>
 
+    @Query("DELETE FROM CARTS")
+    suspend fun deleteAll()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCart(cart: CartEntity) : Long
 
