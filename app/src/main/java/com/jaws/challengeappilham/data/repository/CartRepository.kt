@@ -39,6 +39,11 @@ class CartRepositoryImpl(
                 }
                 Pair(cartList, totalPrice)
             }
+        }.map {
+            if (it.payload?.first?.isEmpty() == true)
+                ResultWrapper.Empty(it.payload)
+            else
+                it
         }.onStart {
             emit(ResultWrapper.Loading())
             delay(2000)

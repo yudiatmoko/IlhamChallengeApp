@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ChallengeAppIlham"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.activitycheckout.CheckoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.activitydetail.ActivityMenuDetail"
             android:exported="false" />
         <activity
