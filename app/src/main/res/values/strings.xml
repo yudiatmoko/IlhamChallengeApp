@@ -33,4 +33,14 @@
     <string name="total_harga">Total Harga</string>
     <string name="total_price">Total Price</string>
     <string name="no_data_text">Tidak Ada Data</string>
+    <string name="checkout">Checkout</string>
+    <string name="metode_pembayaran">Metode Pengiriman</string>
+    <string name="dikirim">Dikirim</string>
+    <string name="ambil_sendiri">Ambil Sendiri</string>
+    <string name="text_payment_method">Metode Pembayaran</string>
+    <string name="text_cash">Tunai</string>
+    <string name="text_e_wallet">Dompet Digital</string>
+    <string name="shopping_summary">Ringkasan Pembayaran</string>
+    <string name="total_pembayaran">Total Pembayaran</string>
+    <string name="pesan">Pesan</string>
 </resources>

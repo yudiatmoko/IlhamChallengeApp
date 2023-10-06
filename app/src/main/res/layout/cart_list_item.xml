@@ -103,6 +103,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/textview_rounded_corner"
         android:hint="@string/catatan"
+        android:textColorHint="#99000000"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:maxLength="50"
