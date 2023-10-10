@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmenthomepage.category
+package com.jaws.challengeappilham.presentation.home.category
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load

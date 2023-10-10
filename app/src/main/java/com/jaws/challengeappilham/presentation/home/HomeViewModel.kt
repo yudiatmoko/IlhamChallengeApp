@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmenthomepage
+package com.jaws.challengeappilham.presentation.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,6 @@ import com.jaws.challengeappilham.data.repository.MenuRepository
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
 
 class HomeViewModel(private val repo: MenuRepository) : ViewModel() {
 

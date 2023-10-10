@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmenthomepage.category
+package com.jaws.challengeappilham.presentation.home.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

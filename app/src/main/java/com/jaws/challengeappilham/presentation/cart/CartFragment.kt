@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmentcart
+package com.jaws.challengeappilham.presentation.cart
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,11 +17,11 @@ import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentCartBinding
 import com.jaws.challengeappilham.model.Cart
 import com.jaws.challengeappilham.model.CartMenu
-import com.jaws.challengeappilham.presentation.activitycheckout.CheckoutActivity
+import com.jaws.challengeappilham.presentation.checkout.CheckoutActivity
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
 
-class FragmentCart : Fragment() {
+class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
 

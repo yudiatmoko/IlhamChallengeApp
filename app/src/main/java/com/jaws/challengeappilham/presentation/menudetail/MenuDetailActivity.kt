@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.activitydetail
+package com.jaws.challengeappilham.presentation.menudetail
 
 import android.content.Context
 import android.content.Intent
@@ -19,7 +19,7 @@ import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
 
-class ActivityMenuDetail : AppCompatActivity() {
+class MenuDetailActivity : AppCompatActivity() {
 
     private val binding: ActivityMenuDetailBinding by lazy {
         ActivityMenuDetailBinding.inflate(
@@ -114,7 +114,7 @@ class ActivityMenuDetail : AppCompatActivity() {
     companion object {
         const val EXTRA_PRODUCT = "EXTRA_PRODUCT"
         fun startActivity(context: Context, menu: Menu) {
-            val intent = Intent(context, ActivityMenuDetail::class.java)
+            val intent = Intent(context, MenuDetailActivity::class.java)
             intent.putExtra(EXTRA_PRODUCT, menu)
             context.startActivity(intent)
         }

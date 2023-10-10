@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.activitydetail
+package com.jaws.challengeappilham.presentation.menudetail
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
@@ -15,7 +15,7 @@ class MenuDetailViewModel(
     private val cartRepository: CartRepository
 ) : ViewModel(){
 
-    val menu = extras?.getParcelable<Menu>(ActivityMenuDetail.EXTRA_PRODUCT)
+    val menu = extras?.getParcelable<Menu>(MenuDetailActivity.EXTRA_PRODUCT)
 
     val priceLiveData = MutableLiveData<Double>().apply {
         postValue(0.0)
