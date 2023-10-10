@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmenthomepage.menu
+package com.jaws.challengeappilham.presentation.home.menu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.MenuGridItemBinding
 import com.jaws.challengeappilham.databinding.MenuListItemBinding
 import com.jaws.challengeappilham.model.Menu
-import com.jaws.challengeappilham.presentation.fragmenthomepage.AdapterLayoutMode
+import com.jaws.challengeappilham.presentation.home.AdapterLayoutMode
 
 class MenuListAdapter(
     var adapterLayoutMode: AdapterLayoutMode,

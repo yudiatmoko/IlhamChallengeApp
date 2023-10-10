@@ -41,4 +41,10 @@
     <string name="shopping_summary">Ringkasan Pembayaran</string>
     <string name="total_pembayaran">Total Pembayaran</string>
     <string name="pesan">Pesan</string>
+    <string name="form_name">Nama</string>
+    <string name="form_email">Email</string>
+    <string name="form_password">Kata Sandi</string>
+    <string name="form_confirm_password">Konfirmasi Kata Sandi\n</string>
+    <string name="text_login">Masuk</string>
+    <string name="text_register_here">Belum memiliki akun? Daftar</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.activitycheckout
+package com.jaws.challengeappilham.presentation.checkout
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -12,7 +12,7 @@ import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDat
 import com.jaws.challengeappilham.data.repository.CartRepository
 import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityCheckoutBinding
-import com.jaws.challengeappilham.presentation.fragmentcart.CartListAdapter
+import com.jaws.challengeappilham.presentation.cart.CartListAdapter
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
 

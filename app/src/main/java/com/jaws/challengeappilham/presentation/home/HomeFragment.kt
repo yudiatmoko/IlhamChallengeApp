@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmenthomepage
+package com.jaws.challengeappilham.presentation.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.map
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -23,16 +22,15 @@ import com.jaws.challengeappilham.data.repository.MenuRepository
 import com.jaws.challengeappilham.data.repository.MenuRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Menu
-import com.jaws.challengeappilham.presentation.activitydetail.ActivityMenuDetail
-import com.jaws.challengeappilham.presentation.fragmenthomepage.category.CategoryListAdapter
-import com.jaws.challengeappilham.presentation.fragmenthomepage.menu.MenuListAdapter
+import com.jaws.challengeappilham.presentation.menudetail.MenuDetailActivity
+import com.jaws.challengeappilham.presentation.home.category.CategoryListAdapter
+import com.jaws.challengeappilham.presentation.home.menu.MenuListAdapter
 import com.jaws.challengeappilham.presentation.main.MainViewModel
 import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
-import com.jaws.challengeappilham.utils.proceed
 import com.jaws.challengeappilham.utils.proceedWhen
 
-class FragmentHomePage : Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomePageBinding
 
@@ -67,7 +65,7 @@ class FragmentHomePage : Fragment() {
     private fun navigateToDetail(menu: Menu) {
 //        val action = FragmentHomePageDirections.actionFragmentHomePageToFragmentMenuDetail(menu)
 //        findNavController().navigate(action)
-        ActivityMenuDetail.startActivity(requireContext(), menu)
+        MenuDetailActivity.startActivity(requireContext(), menu)
     }
 
     override fun onCreateView(
@@ -124,7 +122,7 @@ class FragmentHomePage : Fragment() {
         val span = if(adapterMenu.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
         binding.rvMenu.apply {
             layoutManager = GridLayoutManager(requireContext(),span)
-            adapter = this@FragmentHomePage.adapterMenu
+            adapter = this@HomeFragment.adapterMenu
         }
         setObserveData()
     }

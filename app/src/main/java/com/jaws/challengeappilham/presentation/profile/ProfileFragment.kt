@@ -1,4 +1,4 @@
-package com.jaws.challengeappilham.presentation.fragmentprofile
+package com.jaws.challengeappilham.presentation.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jaws.challengeappilham.databinding.FragmentProfileBinding
-import com.jaws.challengeappilham.presentation.main.MainActivity
 
-class FragmentProfile : Fragment() {
+class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
