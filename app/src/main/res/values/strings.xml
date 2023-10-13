@@ -46,5 +46,16 @@
     <string name="form_password">Kata Sandi</string>
     <string name="form_confirm_password">Konfirmasi Kata Sandi\n</string>
     <string name="text_login">Masuk</string>
+    <string name="text_change_profile">Ubah Profil</string>
     <string name="text_register_here">Belum memiliki akun? Daftar</string>
+    <string name="text_error_email_empty">Email tidak boleh kosong</string>
+    <string name="text_error_email_invalid">Format email tidak valid</string>
+    <string name="text_error_password_empty">Kata sandi tidak boleh kosong</string>
+    <string name="text_error_password_less_than_8_char">Kata sandi harus memiliki 8 karakter</string>
+    <string name="text_register">Daftar</string>
+    <string name="text_login_here">Sudah Memiliki Akun? Masuk</string>
+    <string name="text_error_name_cannot_empty">Nama tidak boleh kosong</string>
+    <string name="text_password_does_not_match">Kata sandi tidak sama</string>
+    <string name="text_change_password">Ubah Password</string>
+    <string name="text_logout">Keluar</string>
 </resources>

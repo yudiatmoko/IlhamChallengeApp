@@ -33,11 +33,11 @@
         app:layout_constraintTop_toBottomOf="@id/layout_form">
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_register"
             android:background="@drawable/button_rounded_corner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_login" />
+            android:text="@string/text_register" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/pb_loading"
@@ -49,12 +49,13 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tv_nav_to_register"
+        android:id="@+id/tv_nav_to_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/text_register_here"
+        android:textColor="@color/black"
+        android:text="@string/text_login_here"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/fl_btn_loading_state" />
 
