@@ -1,13 +1,10 @@
 package com.jaws.challengeappilham.utils
 
 
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlin.Exception
-
 
 sealed class ResultWrapper<T>(
     val payload: T? = null,
@@ -62,6 +59,8 @@ suspend fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
             }
         )
     }.catch { e ->
-        ResultWrapper.Error<T>(exception = Exception(e))
+        emit(ResultWrapper.Error(exception = Exception(e)))
+    }.onStart {
+        emit(ResultWrapper.Loading())
     }
 }
