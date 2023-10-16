@@ -58,4 +58,5 @@
     <string name="text_password_does_not_match">Kata sandi tidak sama</string>
     <string name="text_change_password">Ubah Password</string>
     <string name="text_logout">Keluar</string>
+    <string name="text_error_new_name_must_be_different">Nama baru tidak boleh sama dengan nama saat ini</string>
 </resources>

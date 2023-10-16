@@ -62,6 +62,7 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/md_theme_light_primary"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -86,6 +87,7 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/md_theme_light_primary"
         tools:visibility="visible">
 
         <com.google.android.material.textfield.TextInputEditText
