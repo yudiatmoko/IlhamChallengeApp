@@ -7,16 +7,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.jaws.challengeappilham.data.local.database.entity.CartEntity
-import com.jaws.challengeappilham.data.local.database.relation.CartMenuRelation
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CartDao{
     @Query("SELECT * FROM CARTS")
-    fun getAllCarts(): Flow<List<CartMenuRelation>>
+    fun getAllCarts(): Flow<List<CartEntity>>
 
     @Query("SELECT * FROM CARTS WHERE id == :cartId")
-    fun getCartById(cartId: Int): Flow<CartMenuRelation>
+    fun getCartById(cartId: Int): Flow<CartEntity>
 
     @Query("DELETE FROM CARTS")
     suspend fun deleteAll()

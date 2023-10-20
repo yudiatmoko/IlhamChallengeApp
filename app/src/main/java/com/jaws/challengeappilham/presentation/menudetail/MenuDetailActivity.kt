@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.data.local.database.AppDatabase
 import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
 import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDataSource
+import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSourceImpl
+import com.jaws.challengeappilham.data.network.api.service.RestaurantService
 import com.jaws.challengeappilham.data.repository.CartRepository
 import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
@@ -30,20 +33,22 @@ class MenuDetailActivity : AppCompatActivity() {
     private val viewModel: MenuDetailViewModel by viewModels {
         val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
+        val chucker = ChuckerInterceptor(this)
+        val service = RestaurantService.invoke(chucker)
+        val orderDataSource = RestaurantApiDataSourceImpl(service)
         val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource)
-        GenericViewModelFactory.create(MenuDetailViewModel(intent?.extras, repo)
-        )
+        val cartRepo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
+        GenericViewModelFactory.create(MenuDetailViewModel(intent?.extras, cartRepo))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        showMenuData(viewModel.menu)
         backToHomeClickListener()
         countingClickListener()
         observeData()
         mapsClickListener()
+        viewModel.menu?.let { showMenuData(it) }
     }
 
     private fun observeData() {
@@ -58,7 +63,7 @@ class MenuDetailActivity : AppCompatActivity() {
         viewModel.addToCartResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "Add to cart success !", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Dimasukkan ke keranjang", Toast.LENGTH_SHORT).show()
                     finish()
                 }, doOnError = {
                     Toast.makeText(this, it.exception?.message.orEmpty(), Toast.LENGTH_SHORT).show()
@@ -84,14 +89,14 @@ class MenuDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showMenuData(menu: Menu?) {
+    private fun showMenuData(menu: Menu) {
         menu?.let {
-            binding.ivImgMenuItemDetail.load(it.menuImg)
-            binding.tvMenuName.text = it.menuName
-            binding.tvMenuPrice.text = String.format("Rp. %,.0f", it.menuPrice)
-            binding.tvMenuDesc.text = it.menuDesc
-            binding.tvLocationDetail.text = getString(R.string.location)
-            binding.btnAddToCart.text = getString(R.string.add_to_cart, it.menuPrice.toInt())
+            binding.ivImgMenuItemDetail.load(it.imageUrl)
+            binding.tvMenuName.text = it.name
+            binding.tvMenuPrice.text = String.format("Rp. %,.0f", it.price?.toDouble())
+            binding.tvMenuDesc.text = it.detail
+            binding.tvLocationDetail.text = it.restaurantAddress
+            binding.btnAddToCart.text = getString(R.string.add_to_cart, it.price?.toInt())
         }
     }
 

@@ -9,23 +9,23 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.CartListItemBinding
 import com.jaws.challengeappilham.databinding.CheckoutListItemBinding
-import com.jaws.challengeappilham.model.CartMenu
+import com.jaws.challengeappilham.model.Cart
 
 class CartListAdapter(
     private val cartListener: CartListener? = null
 ) : RecyclerView.Adapter<ViewHolder>()
 {
-    private val dataDiffer = AsyncListDiffer(this, object : DiffUtil.ItemCallback<CartMenu>() {
+    private val dataDiffer = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Cart>() {
             override fun areItemsTheSame(
-                oldItem: CartMenu,
-                newItem: CartMenu
+                oldItem: Cart,
+                newItem: Cart
             ): Boolean {
-                return oldItem.cart.id == newItem.cart.id && oldItem.menu.id == newItem.menu.id
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: CartMenu,
-                newItem: CartMenu
+                oldItem: Cart,
+                newItem: Cart
             ): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
@@ -47,7 +47,7 @@ class CartListAdapter(
         )
     }
 
-    fun submitData(data: List<CartMenu>) {
+    fun submitData(data: List<Cart>) {
         dataDiffer.submitList(data)
     }
 
@@ -57,6 +57,6 @@ class CartListAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        (holder as ViewHolderBinder<CartMenu>).bind(dataDiffer.currentList[position])
+        (holder as ViewHolderBinder<Cart>).bind(dataDiffer.currentList[position])
     }
 }

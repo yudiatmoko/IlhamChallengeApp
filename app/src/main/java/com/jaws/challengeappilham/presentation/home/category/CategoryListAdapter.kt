@@ -10,7 +10,9 @@ import com.jaws.challengeappilham.core.ViewHolderBinder
 import com.jaws.challengeappilham.databinding.CategoryItemBinding
 import com.jaws.challengeappilham.model.Category
 
-class CategoryListAdapter : RecyclerView.Adapter<ViewHolder>(){
+class CategoryListAdapter(
+    private val itemClick: (Category) -> Unit
+) : RecyclerView.Adapter<ViewHolder>(){
 
     private val differ = AsyncListDiffer(this,
         object : DiffUtil.ItemCallback<Category>() {
@@ -33,8 +35,10 @@ class CategoryListAdapter : RecyclerView.Adapter<ViewHolder>(){
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
+        val binding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return CategoryItemViewHolder(
-            binding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            binding,
+            itemClick
         )
     }
 

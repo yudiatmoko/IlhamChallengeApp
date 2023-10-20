@@ -5,7 +5,7 @@
     android:id="@+id/ll_category_item"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
+    android:layout_marginHorizontal="8dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -13,6 +13,7 @@
         android:id="@+id/iv_category_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
         tools:src="@tools:sample/avatars" />
 

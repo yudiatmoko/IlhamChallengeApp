@@ -23,7 +23,7 @@ class MenuListAdapter(
                 oldItem: Menu,
                 newItem: Menu,
             ): Boolean {
-                return oldItem.id == newItem.id
+                return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
