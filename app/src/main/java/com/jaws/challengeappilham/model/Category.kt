@@ -1,9 +1,8 @@
 package com.jaws.challengeappilham.model
 
-import java.util.UUID
-
 data class Category(
-    val id: String = UUID.randomUUID().toString(),
+    val id: Int,
     val catName: String,
     val catImgSrc: String,
+    val slug: String
 )

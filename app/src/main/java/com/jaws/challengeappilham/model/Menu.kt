@@ -6,9 +6,11 @@ import java.util.UUID
 
 @Parcelize
 data class Menu(
-    val id : Int? = null,
-    val menuImg: String,
-    val menuName: String,
-    val menuPrice: Double,
-    val menuDesc: String,
+    val id: Int,
+    val restaurantAddress: String,
+    val detail: String,
+    val price: Double,
+    val formattedPrice: String,
+    val imageUrl: String,
+    val name: String
 ) : Parcelable

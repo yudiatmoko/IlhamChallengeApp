@@ -1,35 +1,32 @@
 package com.jaws.challengeappilham.data.repository
 
-import com.jaws.challengeappilham.data.dummy.DummyCategoryDataSource
-import com.jaws.challengeappilham.data.local.database.datasource.MenuDataSource
-import com.jaws.challengeappilham.data.local.database.mapper.toMenuList
+import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSource
+import com.jaws.challengeappilham.data.network.api.model.category.toCategoryList
+import com.jaws.challengeappilham.data.network.api.model.menu.toMenuList
 import com.jaws.challengeappilham.model.Category
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.ResultWrapper
-import com.jaws.challengeappilham.utils.proceed
-import kotlinx.coroutines.delay
+import com.jaws.challengeappilham.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 
 interface MenuRepository {
-    fun getCategories(): List<Category>
-    fun getMenus(): Flow<ResultWrapper<List<Menu>>>
+    suspend fun getCategories(): Flow<ResultWrapper<List<Category>>>
+    suspend fun getMenus(category: String? = null): Flow<ResultWrapper<List<Menu>>>
 }
 
 class MenuRepositoryImpl(
-    private val menuDataSource: MenuDataSource,
-    private val dummyCategoryDataSource: DummyCategoryDataSource
+    private val apiDataSource: RestaurantApiDataSource
 ) : MenuRepository {
 
-    override fun getCategories(): List<Category> {
-        return dummyCategoryDataSource.getCategoryData()
+    override suspend fun getCategories(): Flow<ResultWrapper<List<Category>>> {
+        return proceedFlow {
+            apiDataSource.getCategories().data?.toCategoryList() ?: emptyList()
+        }
     }
 
-    override fun getMenus(): Flow<ResultWrapper<List<Menu>>> {
-        return menuDataSource.getAllMenus().map { proceed { it.toMenuList() } }.onStart {
-            emit(ResultWrapper.Loading())
-            delay(2000)
+    override suspend fun getMenus(category: String?): Flow<ResultWrapper<List<Menu>>> {
+        return proceedFlow {
+            apiDataSource.getMenus(category).data?.toMenuList() ?: emptyList()
         }
     }
 }

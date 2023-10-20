@@ -15,9 +15,9 @@ class MenuItemGridViewHolder(
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
-        binding.ivMenuImage.load(item.menuImg)
-        binding.tvMenuName.text = item.menuName
-        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.menuPrice)
+        binding.ivMenuImage.load(item.imageUrl)
+        binding.tvMenuName.text = item.name
+        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.price?.toDouble())
     }
 }
 
@@ -29,8 +29,8 @@ class MenuItemLinearViewHolder(
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
-        binding.ivMenuImg.load(item.menuImg)
-        binding.tvMenuName.text = item.menuName
-        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.menuPrice)
+        binding.ivMenuImg.load(item.imageUrl)
+        binding.tvMenuName.text = item.name
+        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.price?.toDouble())
     }
 }

@@ -30,14 +30,14 @@ class MenuDetailViewModel(
     fun add() {
         val count = (menuCountLiveData.value ?: 0) + 1
         menuCountLiveData.postValue(count)
-        priceLiveData.postValue(menu?.menuPrice?.times(count) ?: 0.0)
+        priceLiveData.postValue((menu?.price?.times(count) ?: 0.0).toDouble())
     }
 
     fun minus() {
         if((menuCountLiveData.value ?: 0) > 0){
             val count = (menuCountLiveData.value ?: 0) -1
             menuCountLiveData.postValue(count)
-            priceLiveData.postValue(menu?.menuPrice?.times(count) ?: 0.0)
+            priceLiveData.postValue((menu?.price?.times(count) ?: 0.0).toDouble())
         }
     }
 

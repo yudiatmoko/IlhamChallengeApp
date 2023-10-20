@@ -24,6 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/tv_greeting_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter"
@@ -58,8 +59,8 @@
         android:id="@+id/cl_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:paddingHorizontal="16dp"
-        android:layout_marginVertical="8dp"
         app:layout_constraintBottom_toTopOf="@id/cl_category_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -155,28 +156,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <include
+        android:id="@+id/layout_state_c"
+        layout="@layout/common_layout_content_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/cl_menu_list_title"
+        app:layout_constraintTop_toBottomOf="@id/cl_category_title" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:layout_marginVertical="8dp"
+        android:scrollbars="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/cl_list_menu_makanan_title"
         app:layout_constraintTop_toBottomOf="@id/cl_category_title"
         tools:itemCount="4"
         tools:listitem="@layout/category_item" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_list_menu_makanan_title"
+        android:id="@+id/cl_menu_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         app:layout_constraintTop_toBottomOf="@id/rv_category">
 
         <TextView
-            android:id="@+id/tv_list_menu_makanan_text"
+            android:id="@+id/tv_menu_list_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="@font/inter"
@@ -192,11 +201,11 @@
         <LinearLayout
             android:id="@+id/ll_switch"
             android:layout_width="0dp"
-            android:gravity="end"
             android:layout_height="match_parent"
+            android:gravity="end"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_list_menu_makanan_text">
+            app:layout_constraintStart_toEndOf="@id/tv_menu_list_text">
 
             <ImageView
                 android:id="@+id/iv_list"
@@ -224,12 +233,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
-        android:id="@+id/layout_state"
+        android:id="@+id/layout_state_m"
         layout="@layout/common_layout_content_state"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_list_menu_makanan_title"/>
+        app:layout_constraintTop_toBottomOf="@id/cl_menu_list_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_menu"
@@ -239,7 +248,7 @@
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_list_menu_makanan_title"
+        app:layout_constraintTop_toBottomOf="@id/cl_menu_list_title"
         tools:itemCount="4"
         tools:listitem="@layout/menu_grid_item"
         tools:spanCount="2">
