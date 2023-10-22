@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "453297923251",
+    "project_id": "challenge-app-ilham",
+    "storage_bucket": "challenge-app-ilham.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453297923251:android:4773a5e4518026c205bcc6",
+        "android_client_info": {
+          "package_name": "com.jaws.challengeappilham"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVy7uogqGfmrytyhv5WLhPhI9ghaPbHk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
