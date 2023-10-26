@@ -4,21 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.google.firebase.auth.FirebaseAuth
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSource
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.jaws.challengeappilham.data.repository.UserRepository
-import com.jaws.challengeappilham.data.repository.UserRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityLoginBinding
 import com.jaws.challengeappilham.presentation.main.MainActivity
 import com.jaws.challengeappilham.presentation.register.RegisterActivity
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.highLightWord
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,16 +20,7 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: LoginViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
-
-    private fun createViewModel(): LoginViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource: FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        return LoginViewModel(repository)
-    }
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,44 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
-import androidx.core.view.isGone
+import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
-import com.google.firebase.auth.FirebaseAuth
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.local.datastore.UserPreferenceDataSourceImpl
-import com.jaws.challengeappilham.data.local.datastore.appDataStore
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.jaws.challengeappilham.data.network.api.service.RestaurantService
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.jaws.challengeappilham.data.repository.MenuRepository
-import com.jaws.challengeappilham.data.repository.MenuRepositoryImpl
-import com.jaws.challengeappilham.data.repository.UserRepository
-import com.jaws.challengeappilham.data.repository.UserRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentHomePageBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.presentation.home.category.CategoryListAdapter
 import com.jaws.challengeappilham.presentation.home.menu.MenuListAdapter
 import com.jaws.challengeappilham.presentation.main.MainViewModel
 import com.jaws.challengeappilham.presentation.menudetail.MenuDetailActivity
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
-import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
+import com.jaws.challengeappilham.utils.AssetWrapper
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomePageBinding
+
+    private val homeViewModel: HomeViewModel by viewModel()
+
+    private val mainViewModel: MainViewModel by viewModel()
+
+    private val assetWrapper: AssetWrapper by inject()
 
     private val menuAdapter: MenuListAdapter by lazy {
         MenuListAdapter(AdapterLayoutMode.LINEAR){
@@ -53,25 +42,6 @@ class HomeFragment : Fragment() {
         CategoryListAdapter{
             homeViewModel.getMenus(it.slug)
         }
-    }
-
-    private val viewModel: MainViewModel by viewModels{
-        val dataStore =  this.requireContext().appDataStore
-        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
-        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-        GenericViewModelFactory.create(MainViewModel(userPreferenceDataSource))
-    }
-
-
-    private val homeViewModel: HomeViewModel by viewModels {
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val service = RestaurantService.invoke(chucker)
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val menuDataSource = RestaurantApiDataSourceImpl(service)
-        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val menuRepo: MenuRepository = MenuRepositoryImpl(menuDataSource)
-        val userRepo: UserRepository = UserRepositoryImpl(userDataSource)
-        GenericViewModelFactory.create(HomeViewModel(menuRepo,userRepo))
     }
 
     private fun navigateToDetail(menu: Menu) {
@@ -99,7 +69,7 @@ class HomeFragment : Fragment() {
         val fullName = homeViewModel.getCurrentUser()?.fullName
         val split = fullName?.split(" ")
         val firstName = split?.get(0)
-        binding.tvGreetingText.setText("Halo, ${firstName}!")
+        binding.tvGreetingText.setText(getString(R.string.halo, firstName))
     }
 
     private fun getData() {
@@ -154,15 +124,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSwitch() {
-        viewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner){
+        mainViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner){
             binding.switchListGrid.isChecked = it
         }
 
         binding.switchListGrid.setOnCheckedChangeListener { _, isUsingLinear ->
-            viewModel.setLinearLayoutPref(isUsingLinear)
+            mainViewModel.setLinearLayoutPref(isUsingLinear)
             (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
             menuAdapter.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
             setObserveDataMenu()
+            Toast.makeText(
+                requireContext(),
+                assetWrapper.getString(R.string.text_toast),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

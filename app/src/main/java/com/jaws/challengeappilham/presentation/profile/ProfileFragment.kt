@@ -9,30 +9,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.google.firebase.auth.FirebaseAuth
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.jaws.challengeappilham.data.repository.UserRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentProfileBinding
 import com.jaws.challengeappilham.presentation.login.LoginActivity
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
-    private val viewModel: ProfileViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
-
-    private fun createViewModel(): ProfileViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        return ProfileViewModel(repo)
-    }
+    private val viewModel: ProfileViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

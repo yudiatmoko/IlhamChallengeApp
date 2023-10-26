@@ -29,6 +29,7 @@
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="_6282110654834">+6282110654834</string>
     <string name="catatan">Catatan</string>
+    <string name="all">all</string>
     <string name="total_harga">Total Harga</string>
     <string name="no_data_text">Tidak Ada Data</string>
     <string name="checkout">Checkout</string>
@@ -59,4 +60,6 @@
     <string name="text_change_password">Ubah Password</string>
     <string name="text_logout">Keluar</string>
     <string name="text_error_new_name_must_be_different">Nama baru tidak boleh sama dengan nama saat ini</string>
+    <string name="text_toast">Ubah tampilan list menu</string>
+    <string name="halo">Halo, %1$s!</string>
 </resources>

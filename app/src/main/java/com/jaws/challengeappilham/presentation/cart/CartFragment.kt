@@ -2,27 +2,17 @@ package com.jaws.challengeappilham.presentation.cart
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
+import androidx.fragment.app.Fragment
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.local.database.AppDatabase
-import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
-import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDataSource
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSource
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.jaws.challengeappilham.data.network.api.service.RestaurantService
-import com.jaws.challengeappilham.data.repository.CartRepository
-import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentCartBinding
 import com.jaws.challengeappilham.model.Cart
 import com.jaws.challengeappilham.presentation.checkout.CheckoutActivity
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : Fragment() {
 
@@ -58,16 +48,7 @@ class CartFragment : Fragment() {
         })
     }
 
-    private val viewModel: CartViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val cartDao = database.cartDao()
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val cartRepo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
-        GenericViewModelFactory.create(CartViewModel(cartRepo))
-    }
+    private val viewModel: CartViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -11,11 +11,11 @@ import com.jaws.challengeappilham.utils.ResultWrapper
 import kotlinx.coroutines.launch
 
 class MenuDetailViewModel(
-    private val extras: Bundle?,
+    private val extras: Bundle,
     private val cartRepository: CartRepository
 ) : ViewModel(){
 
-    val menu = extras?.getParcelable<Menu>(MenuDetailActivity.EXTRA_PRODUCT)
+    val menu = extras.getParcelable<Menu>(MenuDetailActivity.EXTRA_PRODUCT)
 
     val priceLiveData = MutableLiveData<Double>().apply {
         postValue(0.0)

@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.data.repository.MenuRepository
 import com.jaws.challengeappilham.data.repository.UserRepository
 import com.jaws.challengeappilham.model.Category
 import com.jaws.challengeappilham.model.Menu
+import com.jaws.challengeappilham.utils.AssetWrapper
 import com.jaws.challengeappilham.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,6 +17,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val menuRepo: MenuRepository,
     private val userRepo: UserRepository,
+    private val assetWrapper: AssetWrapper
 ) : ViewModel() {
 
     private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
@@ -35,7 +38,7 @@ class HomeViewModel(
 
     fun getMenus(category: String? = null){
         viewModelScope.launch(Dispatchers.IO) {
-            menuRepo.getMenus(if(category == "all") null else category).collect{
+            menuRepo.getMenus(if(category == assetWrapper.getString(R.string.all)) null else category).collect{
                 _menus.postValue(it)
             }
         }

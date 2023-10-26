@@ -32,15 +32,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-        flavorDimensions += "env"
-        productFlavors {
-            create("production") {
-                buildConfigField("String", "BASE_URL", "\"https://e9a362b8-abd4-4ce8-a04d-92cc0c7153da.mock.pstmn.io\"")
-            }
-            create("integration") {
-                buildConfigField("String", "BASE_URL", "\"https://e9a362b8-abd4-4ce8-a04d-92cc0c7153da.mock.pstmn.io\"")
-            }
-        }
     }
     compileOptions {
         sourceCompatibility =
@@ -54,6 +45,15 @@ android {
     buildFeatures{
         viewBinding = true
         buildConfig = true
+    }
+    flavorDimensions += "env"
+    productFlavors {
+        create("production") {
+            buildConfigField("String", "BASE_URL", "\"https://e9a362b8-abd4-4ce8-a04d-92cc0c7153da.mock.pstmn.io\"")
+        }
+        create("integration") {
+            buildConfigField("String", "BASE_URL", "\"https://e9a362b8-abd4-4ce8-a04d-92cc0c7153da.mock.pstmn.io\"")
+        }
     }
 }
 
@@ -99,7 +99,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.11.0")
-
+    //chucker
     debugImplementation ("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation ("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+    //koin
+    implementation ("io.insert-koin:koin-android:3.5.0")
 }
