@@ -32,6 +32,7 @@ import com.jaws.challengeappilham.utils.AssetWrapper
 import com.jaws.challengeappilham.utils.PreferenceDataStoreHelper
 import com.jaws.challengeappilham.utils.PreferenceDataStoreHelperImpl
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -77,7 +78,7 @@ object AppModules {
         viewModelOf(::RegisterViewModel)
         viewModelOf(::ProfileViewModel)
         viewModelOf(::CheckoutViewModel)
-        viewModelOf(::MenuDetailViewModel)
+        viewModel{MenuDetailViewModel(get(), get()) }
     }
 
     val modules : List<Module> = listOf(

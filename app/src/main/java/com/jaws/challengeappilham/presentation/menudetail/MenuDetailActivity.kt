@@ -5,14 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
-import com.jaws.challengeappilham.di.AppInjection
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MenuDetailActivity : AppCompatActivity() {
 
@@ -22,11 +22,7 @@ class MenuDetailActivity : AppCompatActivity() {
         )
     }
 
-//    private val viewModel: MenuDetailViewModel by viewModel()
-
-    private val viewModel: MenuDetailViewModel by viewModels {
-        AppInjection.getDetailMenuHomeViewModel(intent?.extras)
-    }
+    private val viewModel: MenuDetailViewModel by viewModel { parametersOf(intent?.extras) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
