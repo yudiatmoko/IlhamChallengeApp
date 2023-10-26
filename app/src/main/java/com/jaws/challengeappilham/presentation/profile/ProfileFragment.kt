@@ -67,7 +67,10 @@ class ProfileFragment : Fragment() {
                     binding.btnChangeProfile.isEnabled = true
                     Toast.makeText(
                         requireContext(),
-                        "Change Profile Failed: ${it.exception?.message.orEmpty()}",
+                        getString(
+                            R.string.change_profile_failed,
+                            it.exception?.message.orEmpty()
+                        ),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -89,12 +92,13 @@ class ProfileFragment : Fragment() {
 
     private fun doLogout() {
         AlertDialog.Builder(requireContext())
-            .setMessage("Apakah kamu ingin keluar? " +
+            .setMessage(
+                getString(R.string.do_you_want_to_logout) +
                     "${viewModel.getCurrentUser()?.fullName}")
-            .setPositiveButton("Ya"){_,_ ->
+            .setPositiveButton(getString(R.string.Yes)){ _, _ ->
                 viewModel.doLogout()
                 navigateToLogin()
-            }.setNegativeButton("Tidak"){_,_ ->
+            }.setNegativeButton(getString(R.string.No)){ _, _ ->
 
             }.create().show()
     }
@@ -109,7 +113,8 @@ class ProfileFragment : Fragment() {
     private fun requestChangePassword() {
         viewModel.createChangePasswordReq()
         AlertDialog.Builder(requireContext())
-            .setMessage("Permintaan ubah password akan dikirim ke email: " +
+            .setMessage(
+                getString(R.string.change_password_request) +
                     "${viewModel.getCurrentUser()?.email}")
             .setPositiveButton("Ok"){_,_ ->
 

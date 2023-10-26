@@ -5,13 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
+import com.jaws.challengeappilham.di.AppInjection
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.proceedWhen
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MenuDetailActivity : AppCompatActivity() {
 
@@ -21,7 +22,11 @@ class MenuDetailActivity : AppCompatActivity() {
         )
     }
 
-    private val viewModel: MenuDetailViewModel by viewModel()
+//    private val viewModel: MenuDetailViewModel by viewModel()
+
+    private val viewModel: MenuDetailViewModel by viewModels {
+        AppInjection.getDetailMenuHomeViewModel(intent?.extras)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +50,10 @@ class MenuDetailActivity : AppCompatActivity() {
         viewModel.addToCartResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "Dimasukkan ke keranjang", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(
+                            R.string.added_to_cart
+                        ), Toast.LENGTH_SHORT).show()
                     finish()
                 }, doOnError = {
                     Toast.makeText(this, it.exception?.message.orEmpty(), Toast.LENGTH_SHORT).show()

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserPreferenceDataSource {
     fun getUserLayoutPrefFlow(): Flow<Boolean>
-    suspend fun setUserLayoutPref(spanCount: Boolean)
+    suspend fun setUserLayoutPref(isUsingLinear: Boolean)
     suspend fun getUserLayoutPref() : Boolean
 }
 

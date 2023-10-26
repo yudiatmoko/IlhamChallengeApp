@@ -62,4 +62,15 @@
     <string name="text_error_new_name_must_be_different">Nama baru tidak boleh sama dengan nama saat ini</string>
     <string name="text_toast">Ubah tampilan list menu</string>
     <string name="halo">Halo, %1$s!</string>
+    <string name="register_failed">Daftar akun gagal: %1$s</string>
+    <string name="change_profile_failed">Ubah profil gagal: %1$s</string>
+    <string name="do_you_want_to_logout">"Apakah kamu ingin keluar? "</string>
+    <string name="Yes">Ya</string>
+    <string name="No">Tidak</string>
+    <string name="change_password_request">"Permintaan ubah password akan dikirim ke email: "</string>
+    <string name="added_to_cart">Dimasukkan ke keranjang</string>
+    <string name="login_failed">Gagal masuk: %1$s</string>
+    <string name="checkout_failed">Pesanan gagal dibuat</string>
+    <string name="checkout_success">Pesanan berhasil dibuat</string>
+    <string name="ok">OK</string>
 </resources>

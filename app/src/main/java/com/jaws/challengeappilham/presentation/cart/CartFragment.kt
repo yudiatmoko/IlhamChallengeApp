@@ -90,6 +90,7 @@ class CartFragment : Fragment() {
         ) {
             it.proceedWhen(
                 doOnSuccess = { result ->
+                    binding.btnCheckout.isClickable = true
                     binding.layoutState.root.isVisible =
                         false
                     binding.layoutState.pbLoading.isVisible =
@@ -120,6 +121,7 @@ class CartFragment : Fragment() {
                         false
                 },
                 doOnEmpty = { result ->
+                    binding.btnCheckout.isClickable = false
                     binding.layoutState.root.isVisible =
                         true
                     binding.rvCart.isVisible =

@@ -10,6 +10,15 @@ import org.koin.core.context.startKoin
 
 class App : Application() {
 
+    init{
+        instance = this
+    }
+
+    companion object{
+        private var instance: App? = null
+        fun appContext(): Context = instance!!.applicationContext
+    }
+
     override fun onCreate() {
         super.onCreate()
         AppDatabase.getInstance(this)

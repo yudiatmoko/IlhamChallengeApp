@@ -49,10 +49,10 @@ android {
     flavorDimensions += "env"
     productFlavors {
         create("production") {
-            buildConfigField("String", "BASE_URL", "\"https://e9a362b8-abd4-4ce8-a04d-92cc0c7153da.mock.pstmn.io\"")
+            buildConfigField("String", "BASE_URL", "\"https://e567b164-fea3-40b1-b1f2-58485d01fa3c.mock.pstmn.io\"")
         }
         create("integration") {
-            buildConfigField("String", "BASE_URL", "\"https://e9a362b8-abd4-4ce8-a04d-92cc0c7153da.mock.pstmn.io\"")
+            buildConfigField("String", "BASE_URL", "\"https://e567b164-fea3-40b1-b1f2-58485d01fa3c.mock.pstmn.io\"")
         }
     }
 }

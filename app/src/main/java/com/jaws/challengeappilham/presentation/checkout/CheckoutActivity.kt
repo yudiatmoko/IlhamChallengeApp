@@ -47,7 +47,7 @@ class CheckoutActivity : AppCompatActivity() {
                 doOnError = {
                     Toast.makeText(
                         this,
-                        "Pesanan gagal dibuat",
+                        getString(R.string.checkout_failed),
                         Toast.LENGTH_SHORT
                     ).show()
                     binding.layoutState.pbLoading.isVisible = true
@@ -65,8 +65,8 @@ class CheckoutActivity : AppCompatActivity() {
 
     private fun dialogOrder() {
         AlertDialog.Builder(this)
-            .setMessage("Pesanan berhasil dibuat")
-            .setPositiveButton("Ok") { _, _ -> finish() }
+            .setMessage(getString(R.string.checkout_success))
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> finish() }
             .show()
     }
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -60,9 +59,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerViewCategory()
         setRecyclerViewMenu()
+        setUsername()
         setupSwitch()
         getData()
-        setUsername()
+        observeMenuLayout()
     }
 
     private fun setUsername() {
@@ -81,7 +81,6 @@ class HomeFragment : Fragment() {
         homeViewModel.menus.observe(viewLifecycleOwner){
             it.proceedWhen(
                 doOnSuccess = { result ->
-                    binding.clMenuListTitle.isVisible = true
                     binding.layoutStateM.root.isVisible = false
                     binding.layoutStateM.pbLoading.isVisible = false
                     binding.layoutStateM.tvError.isVisible = false
@@ -91,7 +90,7 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    binding.clMenuListTitle.isVisible = false
+                    binding.clMenuListTitle.isVisible = true
                     binding.layoutStateM.root.isVisible = true
                     binding.layoutStateM.pbLoading.isVisible = true
                     binding.layoutStateM.tvError.isVisible = false
@@ -103,7 +102,8 @@ class HomeFragment : Fragment() {
                     binding.layoutStateM.tvError.isVisible = true
                     binding.layoutStateM.tvError.text = err.exception?.message.orEmpty()
                     binding.rvMenu.isVisible = false
-                }, doOnEmpty = {
+                },
+                doOnEmpty = {
                     binding.layoutStateM.root.isVisible = true
                     binding.layoutStateM.pbLoading.isVisible = false
                     binding.layoutStateM.tvError.isVisible = true
@@ -123,21 +123,22 @@ class HomeFragment : Fragment() {
         setObserveDataMenu()
     }
 
-    private fun setupSwitch() {
-        mainViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner){
-            binding.switchListGrid.isChecked = it
+    private fun observeMenuLayout() {
+        mainViewModel.userLinearLayoutLiveData.observe(viewLifecycleOwner) { usingGrid ->
+            binding.ivGrid.isVisible = !usingGrid
+            binding.ivList.isVisible = usingGrid
+            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (usingGrid) 2 else 1
+            menuAdapter.adapterLayoutMode = if (usingGrid) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
+            menuAdapter.refreshList()
         }
+    }
 
-        binding.switchListGrid.setOnCheckedChangeListener { _, isUsingLinear ->
-            mainViewModel.setLinearLayoutPref(isUsingLinear)
-            (binding.rvMenu.layoutManager as GridLayoutManager).spanCount = if (isUsingLinear) 2 else 1
-            menuAdapter.adapterLayoutMode = if(isUsingLinear) AdapterLayoutMode.GRID else AdapterLayoutMode.LINEAR
-            setObserveDataMenu()
-            Toast.makeText(
-                requireContext(),
-                assetWrapper.getString(R.string.text_toast),
-                Toast.LENGTH_SHORT
-            ).show()
+    private fun setupSwitch() {
+        binding.ivGrid.setOnClickListener{
+            mainViewModel.setLinearLayoutPref(isUsingLinear = true)
+        }
+        binding.ivList.setOnClickListener{
+            mainViewModel.setLinearLayoutPref(isUsingLinear = false)
         }
     }
 
@@ -163,9 +164,9 @@ class HomeFragment : Fragment() {
                     }
                 },
                 doOnLoading = {
-                    binding.clCategoryTitle.isVisible = false
+                    binding.clCategoryTitle.isVisible = true
                     binding.layoutStateC.root.isVisible = true
-                    binding.layoutStateC.pbLoading.isVisible = false
+                    binding.layoutStateC.pbLoading.isVisible = true
                     binding.layoutStateC.tvError.isVisible = false
                     binding.rvCategory.isVisible = false
                 },
