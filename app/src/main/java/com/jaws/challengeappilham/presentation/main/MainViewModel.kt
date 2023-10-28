@@ -9,10 +9,10 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val userPreferenceDataSource: UserPreferenceDataSource
-) : ViewModel(){
+) : ViewModel() {
     val userLinearLayoutLiveData = userPreferenceDataSource.getUserLayoutPrefFlow().asLiveData(Dispatchers.IO)
 
-    fun setLinearLayoutPref(isUsingLinear : Boolean){
+    fun setLinearLayoutPref(isUsingLinear: Boolean) {
         viewModelScope.launch {
             userPreferenceDataSource.setUserLayoutPref(isUsingLinear)
         }

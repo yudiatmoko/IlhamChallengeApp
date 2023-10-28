@@ -36,8 +36,8 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun observeOrderResult() {
-        viewModel.orderResult.observe(this){
-            it.proceedWhen (
+        viewModel.orderResult.observe(this) {
+            it.proceedWhen(
                 doOnSuccess = {
                     dialogOrder()
                     deleteAllCart()

@@ -1,13 +1,13 @@
-//package com.jaws.challengeappilham.data.dummy
+// package com.jaws.challengeappilham.data.dummy
 //
-//import com.jaws.challengeappilham.R
-//import com.jaws.challengeappilham.model.Category
+// import com.jaws.challengeappilham.R
+// import com.jaws.challengeappilham.model.Category
 //
-//interface DummyCategoryDataSource {
+// interface DummyCategoryDataSource {
 //    fun getCategoryData() : List<Category>
-//}
+// }
 //
-//class DummyCategoryDataSourceImpl() :
+// class DummyCategoryDataSourceImpl() :
 //    DummyCategoryDataSource {
 //    override fun getCategoryData(): List<Category> {
 //        return mutableListOf(
@@ -30,4 +30,4 @@
 //        )
 //    }
 //
-//}
+// }

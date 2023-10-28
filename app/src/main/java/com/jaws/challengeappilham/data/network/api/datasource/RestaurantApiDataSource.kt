@@ -5,7 +5,6 @@ import com.jaws.challengeappilham.data.network.api.model.menu.MenusResponse
 import com.jaws.challengeappilham.data.network.api.model.order.OrderRequest
 import com.jaws.challengeappilham.data.network.api.model.order.OrdersResponse
 import com.jaws.challengeappilham.data.network.api.service.RestaurantService
-import retrofit2.Call
 
 interface RestaurantApiDataSource {
     suspend fun getMenus(category: String? = null): MenusResponse
@@ -15,7 +14,7 @@ interface RestaurantApiDataSource {
 
 class RestaurantApiDataSourceImpl(
     private val service: RestaurantService
-) : RestaurantApiDataSource{
+) : RestaurantApiDataSource {
     override suspend fun getMenus(category: String?): MenusResponse {
         return service.getMenus(category)
     }

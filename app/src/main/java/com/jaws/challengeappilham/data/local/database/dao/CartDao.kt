@@ -10,7 +10,7 @@ import com.jaws.challengeappilham.data.local.database.entity.CartEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CartDao{
+interface CartDao {
     @Query("SELECT * FROM CARTS")
     fun getAllCarts(): Flow<List<CartEntity>>
 
@@ -21,7 +21,7 @@ interface CartDao{
     suspend fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCart(cart: CartEntity) : Long
+    suspend fun insertCart(cart: CartEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCarts(product: List<CartEntity>)

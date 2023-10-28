@@ -24,8 +24,8 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(
             inflater,
@@ -50,7 +50,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.updateProfileResult.observe(viewLifecycleOwner){
+        viewModel.updateProfileResult.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbChangeProfileLoading.isVisible = false
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setClickListeners() {
-        binding.btnChangeProfile.setOnClickListener{
+        binding.btnChangeProfile.setOnClickListener {
             changeProfileData()
         }
         binding.btnChangePassword.setOnClickListener {
@@ -94,17 +94,17 @@ class ProfileFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setMessage(
                 getString(R.string.do_you_want_to_logout) +
-                    "${viewModel.getCurrentUser()?.fullName}")
-            .setPositiveButton(getString(R.string.Yes)){ _, _ ->
+                    "${viewModel.getCurrentUser()?.fullName}"
+            )
+            .setPositiveButton(getString(R.string.Yes)) { _, _ ->
                 viewModel.doLogout()
                 navigateToLogin()
-            }.setNegativeButton(getString(R.string.No)){ _, _ ->
-
+            }.setNegativeButton(getString(R.string.No)) { _, _ ->
             }.create().show()
     }
 
     private fun navigateToLogin() {
-        requireActivity().run{
+        requireActivity().run {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
@@ -115,15 +115,15 @@ class ProfileFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setMessage(
                 getString(R.string.change_password_request) +
-                    "${viewModel.getCurrentUser()?.email}")
-            .setPositiveButton("Ok"){_,_ ->
-
+                    "${viewModel.getCurrentUser()?.email}"
+            )
+            .setPositiveButton("Ok") { _, _ ->
             }.create().show()
     }
 
     private fun changeProfileData() {
         val fullName = binding.layoutForm.etName.text.toString().trim()
-        if (isFormValid()){
+        if (isFormValid()) {
             viewModel.updateProfile(fullName)
         }
     }
@@ -131,23 +131,24 @@ class ProfileFragment : Fragment() {
     private fun isFormValid(): Boolean {
         val currentName = viewModel.getCurrentUser()?.fullName
         val newName = binding.layoutForm.etName.text.toString().trim()
-        return checkNameValidation(currentName,newName)
+        return checkNameValidation(currentName, newName)
     }
 
     private fun checkNameValidation(
         currentName: String?,
         newName: String
     ): Boolean {
-        return if(newName.isEmpty()){
+        return if (newName.isEmpty()) {
             binding.layoutForm.tilName.isErrorEnabled = true
             binding.layoutForm.tilName.error = getString(
-                R.string.text_error_name_cannot_empty)
+                R.string.text_error_name_cannot_empty
+            )
             false
-        } else if (newName == currentName){
+        } else if (newName == currentName) {
             binding.layoutForm.tilName.isErrorEnabled = true
             binding.layoutForm.tilName.error = getString(R.string.text_error_new_name_must_be_different)
             false
-        } else{
+        } else {
             binding.layoutForm.tilName.isErrorEnabled = false
             true
         }

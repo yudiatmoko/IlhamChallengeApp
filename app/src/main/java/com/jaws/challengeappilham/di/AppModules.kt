@@ -39,37 +39,37 @@ import org.koin.dsl.module
 
 object AppModules {
 
-    private val localModule = module{
+    private val localModule = module {
         single { AppDatabase.getInstance(androidContext()) }
         single { get<AppDatabase>().cartDao() }
         single { androidContext().appDataStore }
-        single <PreferenceDataStoreHelper> { PreferenceDataStoreHelperImpl(get()) }
+        single<PreferenceDataStoreHelper> { PreferenceDataStoreHelperImpl(get()) }
     }
 
-    private val networkModule = module{
+    private val networkModule = module {
         single { ChuckerInterceptor(androidContext()) }
         single { RestaurantService.invoke(get()) }
-        single { FirebaseAuth.getInstance()}
+        single { FirebaseAuth.getInstance() }
     }
 
-    private val dataSourceModule = module{
+    private val dataSourceModule = module {
         single<CartDataSource> { CartDatabaseDataSource(get()) }
         single<RestaurantApiDataSource> { RestaurantApiDataSourceImpl(get()) }
         single<UserPreferenceDataSource> { UserPreferenceDataSourceImpl(get()) }
-        single<FirebaseAuthDataSource>{ FirebaseAuthDataSourceImpl(get()) }
+        single<FirebaseAuthDataSource> { FirebaseAuthDataSourceImpl(get()) }
     }
 
-    private val repositoryModule = module{
-        single<CartRepository> { CartRepositoryImpl(get(),get()) }
+    private val repositoryModule = module {
+        single<CartRepository> { CartRepositoryImpl(get(), get()) }
         single<MenuRepository> { MenuRepositoryImpl(get()) }
         single<UserRepository> { UserRepositoryImpl(get()) }
     }
 
-    private val utilsModule = module{
+    private val utilsModule = module {
         single { AssetWrapper(androidContext()) }
     }
 
-    private val viewModelModule = module{
+    private val viewModelModule = module {
         viewModelOf(::MainViewModel)
         viewModelOf(::HomeViewModel)
         viewModelOf(::CartViewModel)
@@ -78,12 +78,15 @@ object AppModules {
         viewModelOf(::RegisterViewModel)
         viewModelOf(::ProfileViewModel)
         viewModelOf(::CheckoutViewModel)
-        viewModel{MenuDetailViewModel(get(), get()) }
+        viewModel { MenuDetailViewModel(get(), get()) }
     }
 
-    val modules : List<Module> = listOf(
-        localModule, networkModule,
-        dataSourceModule, repositoryModule,
-        viewModelModule, utilsModule
+    val modules: List<Module> = listOf(
+        localModule,
+        networkModule,
+        dataSourceModule,
+        repositoryModule,
+        viewModelModule,
+        utilsModule
     )
 }

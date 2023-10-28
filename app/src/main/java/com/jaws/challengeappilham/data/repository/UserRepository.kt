@@ -1,9 +1,9 @@
 package com.jaws.challengeappilham.data.repository
 
 import android.net.Uri
+import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSource
 import com.jaws.challengeappilham.model.User
 import com.jaws.challengeappilham.model.toUser
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSource
 import com.jaws.challengeappilham.utils.ResultWrapper
 import com.jaws.challengeappilham.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
@@ -78,5 +78,4 @@ class UserRepositoryImpl(private val dataSource: FirebaseAuthDataSource) : UserR
     override fun sendChangePasswordRequestByEmail(): Boolean {
         return dataSource.sendChangePasswordRequestByEmail()
     }
-
 }

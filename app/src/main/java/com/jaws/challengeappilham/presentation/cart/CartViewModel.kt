@@ -6,26 +6,26 @@ import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.CartRepository
 import com.jaws.challengeappilham.model.Cart
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class CartViewModel(private val repo : CartRepository) : ViewModel() {
+class CartViewModel(private val repo: CartRepository) : ViewModel() {
 
     val cartList = repo.getCartList().asLiveData(Dispatchers.IO)
 
     fun decreaseCart(item: Cart) {
-        viewModelScope.launch {repo.decreaseCart(item).collect()}
+        viewModelScope.launch { repo.decreaseCart(item).collect() }
     }
 
     fun increaseCart(item: Cart) {
-        viewModelScope.launch {repo.increaseCart(item).collect()}
+        viewModelScope.launch { repo.increaseCart(item).collect() }
     }
 
     fun deleteCart(item: Cart) {
-        viewModelScope.launch {repo.deleteCart(item).collect()}
+        viewModelScope.launch { repo.deleteCart(item).collect() }
     }
 
     fun updateNotes(item: Cart) {
-        viewModelScope.launch {repo.setCartNotes(item).collect()}
+        viewModelScope.launch { repo.setCartNotes(item).collect() }
     }
 }

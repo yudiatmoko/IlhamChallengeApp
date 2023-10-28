@@ -8,8 +8,8 @@ import com.jaws.challengeappilham.model.Category
 
 class CategoryItemViewHolder(
     private val binding: CategoryItemBinding,
-    private val onClicked : (Category) -> Unit
-) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category>{
+    private val onClicked: (Category) -> Unit
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
 
     override fun bind(item: Category) {
         binding.tvCategoryName.text = item.catName

@@ -16,9 +16,7 @@ import com.jaws.challengeappilham.presentation.home.category.CategoryListAdapter
 import com.jaws.challengeappilham.presentation.home.menu.MenuListAdapter
 import com.jaws.challengeappilham.presentation.main.MainViewModel
 import com.jaws.challengeappilham.presentation.menudetail.MenuDetailActivity
-import com.jaws.challengeappilham.utils.AssetWrapper
 import com.jaws.challengeappilham.utils.proceedWhen
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -29,16 +27,15 @@ class HomeFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModel()
 
-    private val assetWrapper: AssetWrapper by inject()
-
     private val menuAdapter: MenuListAdapter by lazy {
-        MenuListAdapter(AdapterLayoutMode.LINEAR){
-            menu: Menu -> navigateToDetail(menu)
+        MenuListAdapter(AdapterLayoutMode.LINEAR) {
+                menu: Menu ->
+            navigateToDetail(menu)
         }
     }
 
     private val categoryAdapter: CategoryListAdapter by lazy {
-        CategoryListAdapter{
+        CategoryListAdapter {
             homeViewModel.getMenus(it.slug)
         }
     }
@@ -48,10 +45,11 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomePageBinding.inflate(inflater,container,false)
+    ): View {
+        binding = FragmentHomePageBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -78,7 +76,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setObserveDataMenu() {
-        homeViewModel.menus.observe(viewLifecycleOwner){
+        homeViewModel.menus.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
                     binding.layoutStateM.root.isVisible = false
@@ -115,9 +113,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerViewMenu() {
-        val span = if(menuAdapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
+        val span = if (menuAdapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
         binding.rvMenu.apply {
-            layoutManager = GridLayoutManager(requireContext(),span)
+            layoutManager = GridLayoutManager(requireContext(), span)
             adapter = this@HomeFragment.menuAdapter
         }
         setObserveDataMenu()
@@ -134,10 +132,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSwitch() {
-        binding.ivGrid.setOnClickListener{
+        binding.ivGrid.setOnClickListener {
             mainViewModel.setLinearLayoutPref(isUsingLinear = true)
         }
-        binding.ivList.setOnClickListener{
+        binding.ivList.setOnClickListener {
             mainViewModel.setLinearLayoutPref(isUsingLinear = false)
         }
     }
@@ -151,7 +149,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setObserveDataCategory() {
-        homeViewModel.categories.observe(viewLifecycleOwner){
+        homeViewModel.categories.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
                     binding.clCategoryTitle.isVisible = true
@@ -176,7 +174,8 @@ class HomeFragment : Fragment() {
                     binding.layoutStateC.tvError.isVisible = true
                     binding.layoutStateC.tvError.text = err.exception?.message.orEmpty()
                     binding.rvCategory.isVisible = false
-                }, doOnEmpty = {
+                },
+                doOnEmpty = {
                     binding.layoutStateC.root.isVisible = true
                     binding.layoutStateC.pbLoading.isVisible = false
                     binding.layoutStateC.tvError.isVisible = true

@@ -35,25 +35,30 @@ class MenuDetailActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.priceLiveData.observe(this){
-            binding.btnAddToCart.text =  getString(R.string.add_to_cart, it.toInt())
+        viewModel.priceLiveData.observe(this) {
+            binding.btnAddToCart.text = getString(R.string.add_to_cart, it.toInt())
         }
 
-        viewModel.menuCountLiveData.observe(this){
+        viewModel.menuCountLiveData.observe(this) {
             binding.tvAmount.text = it.toString()
         }
 
         viewModel.addToCartResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this,
+                    Toast.makeText(
+                        this,
                         getString(
                             R.string.added_to_cart
-                        ), Toast.LENGTH_SHORT).show()
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
-                }, doOnError = {
+                },
+                doOnError = {
                     Toast.makeText(this, it.exception?.message.orEmpty(), Toast.LENGTH_SHORT).show()
-                })
+                }
+            )
         }
     }
 
@@ -70,7 +75,7 @@ class MenuDetailActivity : AppCompatActivity() {
         binding.icRemove.setOnClickListener {
             viewModel.minus()
         }
-        binding.btnAddToCart.setOnClickListener{
+        binding.btnAddToCart.setOnClickListener {
             viewModel.addToCart()
         }
     }
@@ -79,12 +84,14 @@ class MenuDetailActivity : AppCompatActivity() {
         menu.let {
             binding.ivImgMenuItemDetail.load(it.imageUrl)
             binding.tvMenuName.text = it.name
-            binding.tvMenuPrice.text = String.format("Rp. %,.0f",
+            binding.tvMenuPrice.text = String.format(
+                "Rp. %,.0f",
                 it.price
             )
             binding.tvMenuDesc.text = it.detail
             binding.tvLocationDetail.text = it.restaurantAddress
-            binding.btnAddToCart.text = getString(R.string.add_to_cart,
+            binding.btnAddToCart.text = getString(
+                R.string.add_to_cart,
                 it.price.toInt()
             )
         }

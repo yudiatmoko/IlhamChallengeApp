@@ -12,30 +12,32 @@ import com.jaws.challengeappilham.model.Category
 
 class CategoryListAdapter(
     private val itemClick: (Category) -> Unit
-) : RecyclerView.Adapter<ViewHolder>(){
+) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this,
+    private val differ = AsyncListDiffer(
+        this,
         object : DiffUtil.ItemCallback<Category>() {
             override fun areItemsTheSame(
                 oldItem: Category,
-                newItem: Category,
+                newItem: Category
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
                 oldItem: Category,
-                newItem: Category,
+                newItem: Category
             ): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
-        })
+        }
+    )
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ViewHolder {
-        val binding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = CategoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CategoryItemViewHolder(
             binding,
             itemClick
@@ -48,7 +50,7 @@ class CategoryListAdapter(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int,
+        position: Int
     ) {
         (holder as ViewHolderBinder<Category>).bind(differ.currentList[position])
     }
@@ -56,9 +58,4 @@ class CategoryListAdapter(
     fun setData(data: List<Category>) {
         differ.submitList(data)
     }
-
-    fun refreshList() {
-        notifyItemRangeChanged(0,differ.currentList.size)
-    }
-
 }

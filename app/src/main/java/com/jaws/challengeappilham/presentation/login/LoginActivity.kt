@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeResult() {
-        viewModel.loginResult.observe(this){
+        viewModel.loginResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setClickListeners() {
-        binding.tvNavToRegister.highLightWord(getString(R.string.text_register)){
+        binding.tvNavToRegister.highLightWord(getString(R.string.text_register)) {
             navigateToRegister()
         }
 
@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun doLogin() {
-        if(isFormValid()){
+        if (isFormValid()) {
             val email = binding.layoutForm.etEmail.text.toString().trim()
             val password = binding.layoutForm.etPassword.text.toString().trim()
             viewModel.doLogin(email, password)
@@ -104,13 +104,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkEmailValidation(email: String): Boolean {
-        return if (email.isEmpty()){
-            //email cannot be empty
+        return if (email.isEmpty()) {
+            // email cannot be empty
             binding.layoutForm.tilEmail.isErrorEnabled = true
             binding.layoutForm.tilEmail.error = getString(R.string.text_error_email_empty)
             false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            //email format is correct
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            // email format is correct
             binding.layoutForm.tilEmail.isErrorEnabled = true
             binding.layoutForm.tilEmail.error = getString(R.string.text_error_email_invalid)
             false
@@ -121,17 +121,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkPasswordValidation(
-        password: String,
+        password: String
     ): Boolean {
-        return if (password.isEmpty()){
+        return if (password.isEmpty()) {
             binding.layoutForm.tilPassword.isErrorEnabled = true
             binding.layoutForm.tilPassword.error = getString(R.string.text_error_password_empty)
             false
-        } else if (password.length < 8){
+        } else if (password.length < 8) {
             binding.layoutForm.tilPassword.isErrorEnabled = true
             binding.layoutForm.tilPassword.error = getString(R.string.text_error_password_less_than_8_char)
             false
-        } else{
+        } else {
             binding.layoutForm.tilPassword.isErrorEnabled = false
             true
         }

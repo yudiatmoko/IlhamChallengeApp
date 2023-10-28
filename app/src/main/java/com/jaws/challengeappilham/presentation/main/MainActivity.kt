@@ -7,7 +7,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by lazy {

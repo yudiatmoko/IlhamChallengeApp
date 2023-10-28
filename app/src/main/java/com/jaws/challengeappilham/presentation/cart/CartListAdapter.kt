@@ -13,9 +13,10 @@ import com.jaws.challengeappilham.model.Cart
 
 class CartListAdapter(
     private val cartListener: CartListener? = null
-) : RecyclerView.Adapter<ViewHolder>()
-{
-    private val dataDiffer = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Cart>() {
+) : RecyclerView.Adapter<ViewHolder>() {
+    private val dataDiffer = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Cart>() {
             override fun areItemsTheSame(
                 oldItem: Cart,
                 newItem: Cart
@@ -34,17 +35,26 @@ class CartListAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ViewHolder {
-        return if (cartListener != null) CartItemViewHolder(
-            CartListItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            ), cartListener
-        ) else CheckoutViewHolder(
-            CheckoutListItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+        return if (cartListener != null) {
+            CartItemViewHolder(
+                CartListItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                cartListener
             )
-        )
+        } else {
+            CheckoutViewHolder(
+                CheckoutListItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+        }
     }
 
     fun submitData(data: List<Cart>) {
@@ -55,7 +65,7 @@ class CartListAdapter(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int,
+        position: Int
     ) {
         (holder as ViewHolderBinder<Cart>).bind(dataDiffer.currentList[position])
     }

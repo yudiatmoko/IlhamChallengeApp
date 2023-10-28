@@ -21,28 +21,27 @@ class HomeViewModel(
 ) : ViewModel() {
 
     private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
-    val categories : LiveData<ResultWrapper<List<Category>>>
+    val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 
     private val _menus = MutableLiveData<ResultWrapper<List<Menu>>>()
-    val menus : LiveData<ResultWrapper<List<Menu>>>
+    val menus: LiveData<ResultWrapper<List<Menu>>>
         get() = _menus
 
-    fun getCategories(){
+    fun getCategories() {
         viewModelScope.launch(Dispatchers.IO) {
-            menuRepo.getCategories().collect{
+            menuRepo.getCategories().collect {
                 _categories.postValue(it)
             }
         }
     }
 
-    fun getMenus(category: String? = null){
+    fun getMenus(category: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            menuRepo.getMenus(if(category == assetWrapper.getString(R.string.all)) null else category).collect{
+            menuRepo.getMenus(if (category == assetWrapper.getString(R.string.all)) null else category).collect {
                 _menus.postValue(it)
             }
         }
     }
     fun getCurrentUser() = userRepo.getCurrentUser()
 }
-

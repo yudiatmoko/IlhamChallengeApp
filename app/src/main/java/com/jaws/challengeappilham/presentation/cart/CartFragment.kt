@@ -21,18 +21,13 @@ class CartFragment : Fragment() {
     private val cartListAdapter: CartListAdapter by lazy {
         CartListAdapter(object : CartListener {
             override fun onCartClicked(item: Cart) {
-
             }
 
-            override fun onPlusTotalItemCartClicked(
-                cart: Cart,
-            ) {
+            override fun onPlusTotalItemCartClicked(cart: Cart) {
                 viewModel.increaseCart(cart)
             }
 
-            override fun onMinusTotalItemCartClicked(
-                cart: Cart,
-            ) {
+            override fun onMinusTotalItemCartClicked(cart: Cart) {
                 viewModel.decreaseCart(cart)
             }
 
@@ -40,10 +35,8 @@ class CartFragment : Fragment() {
                 viewModel.deleteCart(cart)
             }
 
-            override fun onUserDoneEditingNotes(
-                newCart: Cart,
-            ) {
-                viewModel.updateNotes(newCart)
+            override fun onUserDoneEditingNotes(cart: Cart) {
+                viewModel.updateNotes(cart)
             }
         })
     }
@@ -53,8 +46,8 @@ class CartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(
             inflater,
@@ -66,7 +59,7 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(
             view,
