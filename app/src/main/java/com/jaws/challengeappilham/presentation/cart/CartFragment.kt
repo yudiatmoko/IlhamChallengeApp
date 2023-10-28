@@ -2,27 +2,17 @@ package com.jaws.challengeappilham.presentation.cart
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
-import com.chuckerteam.chucker.api.ChuckerInterceptor
+import androidx.fragment.app.Fragment
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.local.database.AppDatabase
-import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
-import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDataSource
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSource
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.jaws.challengeappilham.data.network.api.service.RestaurantService
-import com.jaws.challengeappilham.data.repository.CartRepository
-import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.FragmentCartBinding
 import com.jaws.challengeappilham.model.Cart
 import com.jaws.challengeappilham.presentation.checkout.CheckoutActivity
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : Fragment() {
 
@@ -31,18 +21,13 @@ class CartFragment : Fragment() {
     private val cartListAdapter: CartListAdapter by lazy {
         CartListAdapter(object : CartListener {
             override fun onCartClicked(item: Cart) {
-
             }
 
-            override fun onPlusTotalItemCartClicked(
-                cart: Cart,
-            ) {
+            override fun onPlusTotalItemCartClicked(cart: Cart) {
                 viewModel.increaseCart(cart)
             }
 
-            override fun onMinusTotalItemCartClicked(
-                cart: Cart,
-            ) {
+            override fun onMinusTotalItemCartClicked(cart: Cart) {
                 viewModel.decreaseCart(cart)
             }
 
@@ -50,30 +35,19 @@ class CartFragment : Fragment() {
                 viewModel.deleteCart(cart)
             }
 
-            override fun onUserDoneEditingNotes(
-                newCart: Cart,
-            ) {
-                viewModel.updateNotes(newCart)
+            override fun onUserDoneEditingNotes(cart: Cart) {
+                viewModel.updateNotes(cart)
             }
         })
     }
 
-    private val viewModel: CartViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val cartDao = database.cartDao()
-        val chucker = ChuckerInterceptor(requireContext().applicationContext)
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val cartRepo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
-        GenericViewModelFactory.create(CartViewModel(cartRepo))
-    }
+    private val viewModel: CartViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentCartBinding.inflate(
             inflater,
@@ -85,7 +59,7 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(
         view: View,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ) {
         super.onViewCreated(
             view,
@@ -109,6 +83,7 @@ class CartFragment : Fragment() {
         ) {
             it.proceedWhen(
                 doOnSuccess = { result ->
+                    binding.btnCheckout.isClickable = true
                     binding.layoutState.root.isVisible =
                         false
                     binding.layoutState.pbLoading.isVisible =
@@ -139,6 +114,7 @@ class CartFragment : Fragment() {
                         false
                 },
                 doOnEmpty = { result ->
+                    binding.btnCheckout.isClickable = false
                     binding.layoutState.root.isVisible =
                         true
                     binding.rvCart.isVisible =

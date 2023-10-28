@@ -14,31 +14,33 @@ import com.jaws.challengeappilham.presentation.home.AdapterLayoutMode
 
 class MenuListAdapter(
     var adapterLayoutMode: AdapterLayoutMode,
-    private val onItemClick: (Menu) -> Unit,
+    private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this,
+    private val differ = AsyncListDiffer(
+        this,
         object : DiffUtil.ItemCallback<Menu>() {
             override fun areItemsTheSame(
                 oldItem: Menu,
-                newItem: Menu,
+                newItem: Menu
             ): Boolean {
                 return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
                 oldItem: Menu,
-                newItem: Menu,
+                newItem: Menu
             ): Boolean {
                 return oldItem.hashCode() == newItem.hashCode()
             }
-        })
+        }
+    )
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
+        viewType: Int
     ): ViewHolder {
-        return when (viewType){
+        return when (viewType) {
             AdapterLayoutMode.GRID.ordinal -> {
                 MenuItemGridViewHolder(
                     binding = MenuGridItemBinding.inflate(
@@ -64,7 +66,7 @@ class MenuListAdapter(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int,
+        position: Int
     ) {
         (holder as ViewHolderBinder<Menu>).bind(differ.currentList[position])
     }
@@ -80,6 +82,6 @@ class MenuListAdapter(
     }
 
     fun refreshList() {
-        notifyItemRangeChanged(0,differ.currentList.size)
+        notifyItemRangeChanged(0, differ.currentList.size)
     }
 }

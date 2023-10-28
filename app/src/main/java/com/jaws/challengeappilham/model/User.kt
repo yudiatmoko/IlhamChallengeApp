@@ -7,8 +7,12 @@ data class User(
     val email: String
 )
 
-fun FirebaseUser?.toUser(): User? = if (this != null) User(
-    fullName = this.displayName.orEmpty(),
-    photoUrl = this.photoUrl.toString(),
-    email = this.email.orEmpty(),
-) else null
+fun FirebaseUser?.toUser(): User? = if (this != null) {
+    User(
+        fullName = this.displayName.orEmpty(),
+        photoUrl = this.photoUrl.toString(),
+        email = this.email.orEmpty()
+    )
+} else {
+    null
+}

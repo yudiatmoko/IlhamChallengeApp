@@ -26,7 +26,7 @@ interface CartRepository {
     suspend fun setCartNotes(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteAll()
-    suspend fun order(items: List<Cart>) : Flow<ResultWrapper<Boolean>>
+    suspend fun order(items: List<Cart>): Flow<ResultWrapper<Boolean>>
 }
 
 class CartRepositoryImpl(
@@ -47,10 +47,11 @@ class CartRepositoryImpl(
                     Pair(result, totalPrice)
                 }
             }.map {
-                if (it.payload?.first?.isEmpty() == true)
+                if (it.payload?.first?.isEmpty() == true) {
                     ResultWrapper.Empty(it.payload)
-                else
+                } else {
                     it
+                }
             }
             .onStart {
                 emit(ResultWrapper.Loading())
@@ -112,7 +113,7 @@ class CartRepositoryImpl(
 
     override suspend fun order(items: List<Cart>): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
-            val orderItems = items.map{
+            val orderItems = items.map {
                 OrderItemRequest(it.itemNotes, it.menuPrice.toInt(), it.menuName, it.itemQuantity)
             }
 

@@ -2,52 +2,18 @@ package com.jaws.challengeappilham.presentation.checkout
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.chuckerteam.chucker.api.ChuckerInterceptor
-import com.google.firebase.auth.FirebaseAuth
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.local.database.AppDatabase
-import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
-import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDataSource
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.jaws.challengeappilham.data.network.api.model.order.OrderItemRequest
-import com.jaws.challengeappilham.data.network.api.model.order.OrderRequest
-import com.jaws.challengeappilham.data.network.api.service.RestaurantService
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.jaws.challengeappilham.data.repository.CartRepository
-import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
-import com.jaws.challengeappilham.data.repository.MenuRepository
-import com.jaws.challengeappilham.data.repository.MenuRepositoryImpl
-import com.jaws.challengeappilham.data.repository.OrderRepository
-import com.jaws.challengeappilham.data.repository.OrderRepositoryImpl
-import com.jaws.challengeappilham.data.repository.UserRepository
-import com.jaws.challengeappilham.data.repository.UserRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityCheckoutBinding
-import com.jaws.challengeappilham.model.OrderItem
 import com.jaws.challengeappilham.presentation.cart.CartListAdapter
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
 
-    private val viewModel: CheckoutViewModel by viewModels {
-        val database = AppDatabase.getInstance(this)
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val cartDao = database.cartDao()
-        val chucker = ChuckerInterceptor(this)
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val cartRepo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
-        val userDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val userRepo: UserRepository = UserRepositoryImpl(userDataSource)
-        GenericViewModelFactory.create(CheckoutViewModel(
-            cartRepo, userRepo
-        ))
-    }
+    private val viewModel: CheckoutViewModel by viewModel()
 
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(
@@ -70,8 +36,8 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun observeOrderResult() {
-        viewModel.orderResult.observe(this){
-            it.proceedWhen (
+        viewModel.orderResult.observe(this) {
+            it.proceedWhen(
                 doOnSuccess = {
                     dialogOrder()
                     deleteAllCart()
@@ -81,7 +47,7 @@ class CheckoutActivity : AppCompatActivity() {
                 doOnError = {
                     Toast.makeText(
                         this,
-                        "Pesanan gagal dibuat",
+                        getString(R.string.checkout_failed),
                         Toast.LENGTH_SHORT
                     ).show()
                     binding.layoutState.pbLoading.isVisible = true
@@ -99,8 +65,8 @@ class CheckoutActivity : AppCompatActivity() {
 
     private fun dialogOrder() {
         AlertDialog.Builder(this)
-            .setMessage("Pesanan berhasil dibuat")
-            .setPositiveButton("Ok") { _, _ -> finish() }
+            .setMessage(getString(R.string.checkout_success))
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> finish() }
             .show()
     }
 

@@ -1,13 +1,13 @@
-//package com.jaws.challengeappilham.data.dummy
+// package com.jaws.challengeappilham.data.dummy
 //
-//import com.jaws.challengeappilham.R
-//import com.jaws.challengeappilham.model.Menu
+// import com.jaws.challengeappilham.R
+// import com.jaws.challengeappilham.model.Menu
 //
-//interface DummyMenuDataSource {
+// interface DummyMenuDataSource {
 //    fun getMenuData() : List<Menu>
-//}
+// }
 //
-//class DummyMenuDataSourceImpl() : DummyMenuDataSource {
+// class DummyMenuDataSourceImpl() : DummyMenuDataSource {
 //    override fun getMenuData(): List<Menu> {
 //        return  mutableListOf(
 //            Menu(
@@ -103,4 +103,4 @@
 //            ),
 //        )
 //    }
-//}
+// }

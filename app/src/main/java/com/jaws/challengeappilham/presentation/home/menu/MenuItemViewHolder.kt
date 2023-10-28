@@ -10,20 +10,20 @@ import com.jaws.challengeappilham.model.Menu
 class MenuItemGridViewHolder(
     private val binding: MenuGridItemBinding,
     private val onItemClick: (Menu) -> Unit
-) : RecyclerView.ViewHolder(binding.root),ViewHolderBinder<Menu> {
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Menu> {
     override fun bind(item: Menu) {
         binding.root.setOnClickListener {
             onItemClick.invoke(item)
         }
         binding.ivMenuImage.load(item.imageUrl)
         binding.tvMenuName.text = item.name
-        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.price?.toDouble())
+        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.price)
     }
 }
 
 class MenuItemLinearViewHolder(
-    private val binding : MenuListItemBinding,
-    private val onItemClick : (Menu) -> Unit
+    private val binding: MenuListItemBinding,
+    private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Menu> {
     override fun bind(item: Menu) {
         binding.root.setOnClickListener {
@@ -31,6 +31,6 @@ class MenuItemLinearViewHolder(
         }
         binding.ivMenuImg.load(item.imageUrl)
         binding.tvMenuName.text = item.name
-        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.price?.toDouble())
+        binding.tvMenuPrice.text = String.format("Rp. %,.0f", item.price)
     }
 }

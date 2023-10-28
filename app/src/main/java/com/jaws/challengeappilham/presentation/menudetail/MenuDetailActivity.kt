@@ -5,22 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.local.database.AppDatabase
-import com.jaws.challengeappilham.data.local.database.datasource.CartDataSource
-import com.jaws.challengeappilham.data.local.database.datasource.CartDatabaseDataSource
-import com.jaws.challengeappilham.data.network.api.datasource.RestaurantApiDataSourceImpl
-import com.jaws.challengeappilham.data.network.api.service.RestaurantService
-import com.jaws.challengeappilham.data.repository.CartRepository
-import com.jaws.challengeappilham.data.repository.CartRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MenuDetailActivity : AppCompatActivity() {
 
@@ -30,16 +22,7 @@ class MenuDetailActivity : AppCompatActivity() {
         )
     }
 
-    private val viewModel: MenuDetailViewModel by viewModels {
-        val database = AppDatabase.getInstance(this)
-        val cartDao = database.cartDao()
-        val chucker = ChuckerInterceptor(this)
-        val service = RestaurantService.invoke(chucker)
-        val orderDataSource = RestaurantApiDataSourceImpl(service)
-        val cartDataSource: CartDataSource = CartDatabaseDataSource(cartDao)
-        val cartRepo: CartRepository = CartRepositoryImpl(cartDataSource, orderDataSource)
-        GenericViewModelFactory.create(MenuDetailViewModel(intent?.extras, cartRepo))
-    }
+    private val viewModel: MenuDetailViewModel by viewModel { parametersOf(intent?.extras) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,22 +35,30 @@ class MenuDetailActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.priceLiveData.observe(this){
-            binding.btnAddToCart.text =  getString(R.string.add_to_cart, it.toInt())
+        viewModel.priceLiveData.observe(this) {
+            binding.btnAddToCart.text = getString(R.string.add_to_cart, it.toInt())
         }
 
-        viewModel.menuCountLiveData.observe(this){
+        viewModel.menuCountLiveData.observe(this) {
             binding.tvAmount.text = it.toString()
         }
 
         viewModel.addToCartResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "Dimasukkan ke keranjang", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        getString(
+                            R.string.added_to_cart
+                        ),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
-                }, doOnError = {
+                },
+                doOnError = {
                     Toast.makeText(this, it.exception?.message.orEmpty(), Toast.LENGTH_SHORT).show()
-                })
+                }
+            )
         }
     }
 
@@ -84,19 +75,25 @@ class MenuDetailActivity : AppCompatActivity() {
         binding.icRemove.setOnClickListener {
             viewModel.minus()
         }
-        binding.btnAddToCart.setOnClickListener{
+        binding.btnAddToCart.setOnClickListener {
             viewModel.addToCart()
         }
     }
 
     private fun showMenuData(menu: Menu) {
-        menu?.let {
+        menu.let {
             binding.ivImgMenuItemDetail.load(it.imageUrl)
             binding.tvMenuName.text = it.name
-            binding.tvMenuPrice.text = String.format("Rp. %,.0f", it.price?.toDouble())
+            binding.tvMenuPrice.text = String.format(
+                "Rp. %,.0f",
+                it.price
+            )
             binding.tvMenuDesc.text = it.detail
             binding.tvLocationDetail.text = it.restaurantAddress
-            binding.btnAddToCart.text = getString(R.string.add_to_cart, it.price?.toInt())
+            binding.btnAddToCart.text = getString(
+                R.string.add_to_cart,
+                it.price.toInt()
+            )
         }
     }
 

@@ -1,8 +1,7 @@
 package com.jaws.challengeappilham.data.network.api.model.menu
 
-
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 import com.jaws.challengeappilham.model.Menu
 
 @Keep

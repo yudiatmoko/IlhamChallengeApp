@@ -17,25 +17,14 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private const val DB_NAME = "ChallengeAppIlham.db"
-
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
-            // if the INSTANCE is not null, then return it,
-            // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
-
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    DB_NAME
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                // return instance
-                instance
-            }
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                DB_NAME
+            )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }

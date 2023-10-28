@@ -4,21 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.google.firebase.auth.FirebaseAuth
 import com.jaws.challengeappilham.R
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSource
-import com.jaws.challengeappilham.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.jaws.challengeappilham.data.repository.UserRepository
-import com.jaws.challengeappilham.data.repository.UserRepositoryImpl
 import com.jaws.challengeappilham.databinding.ActivityLoginBinding
 import com.jaws.challengeappilham.presentation.main.MainActivity
 import com.jaws.challengeappilham.presentation.register.RegisterActivity
-import com.jaws.challengeappilham.utils.GenericViewModelFactory
 import com.jaws.challengeappilham.utils.highLightWord
 import com.jaws.challengeappilham.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,16 +20,7 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: LoginViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
-
-    private fun createViewModel(): LoginViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource: FirebaseAuthDataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository: UserRepository = UserRepositoryImpl(dataSource)
-        return LoginViewModel(repository)
-    }
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,14 +31,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupForm() {
-        //todo : setup form
         binding.layoutForm.tilEmail.isVisible = true
         binding.layoutForm.tilPassword.isVisible = true
     }
 
     private fun observeResult() {
-        //todo : observe value from login result
-        viewModel.loginResult.observe(this){
+        viewModel.loginResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
                     binding.pbLoading.isVisible = false
@@ -71,7 +54,10 @@ class LoginActivity : AppCompatActivity() {
                     binding.btnLogin.isEnabled = true
                     Toast.makeText(
                         this,
-                        "Login Failed: ${it.exception?.message.orEmpty()}",
+                        getString(
+                            R.string.login_failed,
+                            it.exception?.message.orEmpty()
+                        ),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -80,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        //todo : navigate to main
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         }
@@ -88,8 +73,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setClickListeners() {
-        //todo :set click listener
-        binding.tvNavToRegister.highLightWord(getString(R.string.text_register)){
+        binding.tvNavToRegister.highLightWord(getString(R.string.text_register)) {
             navigateToRegister()
         }
 
@@ -106,8 +90,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun doLogin() {
-        //todo : do login process
-        if(isFormValid()){
+        if (isFormValid()) {
             val email = binding.layoutForm.etEmail.text.toString().trim()
             val password = binding.layoutForm.etPassword.text.toString().trim()
             viewModel.doLogin(email, password)
@@ -115,21 +98,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isFormValid(): Boolean {
-        //todo : create result from email validation and password
         val email = binding.layoutForm.etEmail.text.toString().trim()
         val password = binding.layoutForm.etPassword.text.toString().trim()
         return checkEmailValidation(email) && checkPasswordValidation(password)
     }
 
     private fun checkEmailValidation(email: String): Boolean {
-        //todo : check email is valid
-        return if (email.isEmpty()){
-            //email cannot be empty
+        return if (email.isEmpty()) {
+            // email cannot be empty
             binding.layoutForm.tilEmail.isErrorEnabled = true
             binding.layoutForm.tilEmail.error = getString(R.string.text_error_email_empty)
             false
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            //email format is correct
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            // email format is correct
             binding.layoutForm.tilEmail.isErrorEnabled = true
             binding.layoutForm.tilEmail.error = getString(R.string.text_error_email_invalid)
             false
@@ -140,18 +121,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkPasswordValidation(
-        password: String,
+        password: String
     ): Boolean {
-        //todo : check password is valid
-        return if (password.isEmpty()){
+        return if (password.isEmpty()) {
             binding.layoutForm.tilPassword.isErrorEnabled = true
             binding.layoutForm.tilPassword.error = getString(R.string.text_error_password_empty)
             false
-        } else if (password.length < 8){
+        } else if (password.length < 8) {
             binding.layoutForm.tilPassword.isErrorEnabled = true
             binding.layoutForm.tilPassword.error = getString(R.string.text_error_password_less_than_8_char)
             false
-        } else{
+        } else {
             binding.layoutForm.tilPassword.isErrorEnabled = false
             true
         }

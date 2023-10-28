@@ -7,7 +7,6 @@ import com.jaws.challengeappilham.data.network.api.model.menu.MenusResponse
 import com.jaws.challengeappilham.data.network.api.model.order.OrderRequest
 import com.jaws.challengeappilham.data.network.api.model.order.OrdersResponse
 import okhttp3.OkHttpClient
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -38,11 +37,13 @@ interface RestaurantService {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(
-                    GsonConverterFactory.create())
+                    GsonConverterFactory.create()
+                )
                 .client(okHttpClient)
                 .build()
             return retrofit.create(
-                RestaurantService::class.java)
+                RestaurantService::class.java
+            )
         }
     }
 }

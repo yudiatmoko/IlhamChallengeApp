@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="12dp"
         android:paddingStart="12dp"
+        android:paddingEnd="10dp"
         android:background="@drawable/bg_gradient_black_linear"
         android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +93,7 @@
             android:id="@+id/view_line"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/md_theme_dark_secondary" />
+            android:background="@color/md_theme_light_surfaceVariant" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -153,7 +154,7 @@
             android:id="@+id/view_line_2"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/md_theme_dark_secondary"
+            android:background="@color/md_theme_light_surfaceVariant"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout

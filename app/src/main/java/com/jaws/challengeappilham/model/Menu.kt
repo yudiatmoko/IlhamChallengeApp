@@ -2,11 +2,10 @@ package com.jaws.challengeappilham.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.UUID
 
 @Parcelize
 data class Menu(
-    val id: Int,
+    val id: Int? = null,
     val restaurantAddress: String,
     val detail: String,
     val price: Double,

@@ -15,15 +15,15 @@ class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
         get() = _updateProfileResult
 
     fun getCurrentUser() = repo.getCurrentUser()
-    fun createChangePasswordReq(){
+    fun createChangePasswordReq() {
         repo.sendChangePasswordRequestByEmail()
     }
-    fun doLogout(){
+    fun doLogout() {
         repo.doLogout()
     }
-    fun updateProfile(fullName: String){
+    fun updateProfile(fullName: String) {
         viewModelScope.launch {
-            repo.updateProfile(fullName).collect{
+            repo.updateProfile(fullName).collect {
                 _updateProfileResult.postValue(it)
             }
         }

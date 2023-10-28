@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class MenuDetailViewModel(
     private val extras: Bundle?,
     private val cartRepository: CartRepository
-) : ViewModel(){
+) : ViewModel() {
 
     val menu = extras?.getParcelable<Menu>(MenuDetailActivity.EXTRA_PRODUCT)
 
@@ -34,8 +34,8 @@ class MenuDetailViewModel(
     }
 
     fun minus() {
-        if((menuCountLiveData.value ?: 0) > 0){
-            val count = (menuCountLiveData.value ?: 0) -1
+        if ((menuCountLiveData.value ?: 0) > 0) {
+            val count = (menuCountLiveData.value ?: 0) - 1
             menuCountLiveData.postValue(count)
             priceLiveData.postValue((menu?.price?.times(count) ?: 0.0).toDouble())
         }
