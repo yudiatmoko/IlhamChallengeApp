@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CheckoutViewModel(
-    private val cartRepository: CartRepository,
+    private val cartRepository: CartRepository
 ) : ViewModel() {
 
     val cartList = cartRepository.getCartList().asLiveData(Dispatchers.IO)
