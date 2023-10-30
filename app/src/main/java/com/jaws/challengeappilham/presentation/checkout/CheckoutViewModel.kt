@@ -7,11 +7,14 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.CartRepository
 import com.jaws.challengeappilham.utils.ResultWrapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CheckoutViewModel(
-    private val cartRepository: CartRepository,
+@HiltViewModel
+class CheckoutViewModel @Inject constructor(
+    private val cartRepository: CartRepository
 ) : ViewModel() {
 
     val cartList = cartRepository.getCartList().asLiveData(Dispatchers.IO)

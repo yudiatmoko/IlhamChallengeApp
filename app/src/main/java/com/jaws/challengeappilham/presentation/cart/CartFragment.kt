@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.FragmentCartBinding
 import com.jaws.challengeappilham.model.Cart
 import com.jaws.challengeappilham.presentation.checkout.CheckoutActivity
 import com.jaws.challengeappilham.utils.proceedWhen
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
@@ -41,7 +43,7 @@ class CartFragment : Fragment() {
         })
     }
 
-    private val viewModel: CartViewModel by viewModel()
+    private val viewModel: CartViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

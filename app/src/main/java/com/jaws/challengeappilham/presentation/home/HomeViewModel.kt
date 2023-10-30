@@ -11,10 +11,13 @@ import com.jaws.challengeappilham.model.Category
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.AssetWrapper
 import com.jaws.challengeappilham.utils.ResultWrapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val menuRepo: MenuRepository,
     private val userRepo: UserRepository,
     private val assetWrapper: AssetWrapper

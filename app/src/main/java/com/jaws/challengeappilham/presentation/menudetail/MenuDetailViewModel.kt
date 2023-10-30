@@ -8,12 +8,21 @@ import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.CartRepository
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.ResultWrapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MenuDetailViewModel(
-    private val extras: Bundle?,
+@HiltViewModel
+class MenuDetailViewModel @Inject constructor(
+//    private val extras: Bundle?,
     private val cartRepository: CartRepository
 ) : ViewModel() {
+
+    private var extras: Bundle? = null
+
+    fun setExtras(extras: Bundle?) {
+        this.extras = extras
+    }
 
     val menu = extras?.getParcelable<Menu>(MenuDetailActivity.EXTRA_PRODUCT)
 

@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.UserRepository
 import com.jaws.challengeappilham.utils.ResultWrapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel(private val repo: UserRepository) : ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(private val repo: UserRepository) : ViewModel() {
 
     private val _updateProfileResult = MutableLiveData<ResultWrapper<Boolean>>()
     val updateProfileResult: LiveData<ResultWrapper<Boolean>>

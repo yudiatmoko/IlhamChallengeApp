@@ -1,23 +1,21 @@
 package com.jaws.challengeappilham
 
 import android.app.Application
-import com.jaws.challengeappilham.di.AppModules
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initKoin()
+//        initKoin()
     }
 
-    private fun initKoin() {
-        startKoin {
-            androidLogger()
-            androidContext(this@App)
-            modules(AppModules.modules)
-        }
-    }
+//    private fun initKoin() {
+//        startKoin {
+//            androidLogger()
+//            androidContext(this@App)
+//            modules(AppModules.modules)
+//        }
+//    }
 }

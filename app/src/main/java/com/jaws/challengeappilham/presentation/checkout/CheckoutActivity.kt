@@ -2,6 +2,7 @@ package com.jaws.challengeappilham.presentation.checkout
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -9,11 +10,12 @@ import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityCheckoutBinding
 import com.jaws.challengeappilham.presentation.cart.CartListAdapter
 import com.jaws.challengeappilham.utils.proceedWhen
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CheckoutActivity : AppCompatActivity() {
 
-    private val viewModel: CheckoutViewModel by viewModel()
+    private val viewModel: CheckoutViewModel by viewModels()
 
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(

@@ -2,18 +2,20 @@ package com.jaws.challengeappilham.presentation.splashscreen
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.jaws.challengeappilham.databinding.ActivitySplashScreenBinding
 import com.jaws.challengeappilham.presentation.login.LoginActivity
 import com.jaws.challengeappilham.presentation.main.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val viewModel: SplashScreenViewModel by viewModel()
+    private val viewModel: SplashScreenViewModel by viewModels()
 
     private val binding: ActivitySplashScreenBinding by lazy {
         ActivitySplashScreenBinding.inflate(layoutInflater)

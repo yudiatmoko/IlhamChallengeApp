@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.UserRepository
 import com.jaws.challengeappilham.utils.ResultWrapper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-/**
-Written with love by Muhammad Hermas Yuda Pamungkas
-Github : https://github.com/hermasyp
- **/
-class RegisterViewModel(private val repo: UserRepository) : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(private val repo: UserRepository) : ViewModel() {
 
     private val _registerResult = MutableLiveData<ResultWrapper<Boolean>>()
     val registerResult: LiveData<ResultWrapper<Boolean>>

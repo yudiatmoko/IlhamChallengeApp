@@ -5,15 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.jaws.challengeappilham.R
 import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.proceedWhen
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MenuDetailActivity : AppCompatActivity() {
 
     private val binding: ActivityMenuDetailBinding by lazy {
@@ -22,11 +23,14 @@ class MenuDetailActivity : AppCompatActivity() {
         )
     }
 
-    private val viewModel: MenuDetailViewModel by viewModel { parametersOf(intent?.extras) }
+    private val intentExtras: Bundle by lazy { intent.extras ?: Bundle() }
+
+    private val viewModel: MenuDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        viewModel.setExtras(intentExtras)
         backToHomeClickListener()
         countingClickListener()
         observeData()
