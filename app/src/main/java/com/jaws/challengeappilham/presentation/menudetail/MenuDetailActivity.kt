@@ -13,6 +13,7 @@ import com.jaws.challengeappilham.databinding.ActivityMenuDetailBinding
 import com.jaws.challengeappilham.model.Menu
 import com.jaws.challengeappilham.utils.proceedWhen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MenuDetailActivity : AppCompatActivity() {
@@ -23,14 +24,15 @@ class MenuDetailActivity : AppCompatActivity() {
         )
     }
 
-    private val intentExtras: Bundle by lazy { intent.extras ?: Bundle() }
+    @Inject lateinit var factory: MenuDetailViewModel.Factory
 
-    private val viewModel: MenuDetailViewModel by viewModels()
+    private val viewModel: MenuDetailViewModel by viewModels {
+        MenuDetailViewModel.provideMenuDetailViewModelFactory(factory, intent?.extras)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel.setExtras(intentExtras)
         backToHomeClickListener()
         countingClickListener()
         observeData()
