@@ -17,18 +17,18 @@ class CartViewModel @Inject constructor(private val repo: CartRepository) : View
     val cartList = repo.getCartList().asLiveData(Dispatchers.IO)
 
     fun decreaseCart(item: Cart) {
-        viewModelScope.launch { repo.decreaseCart(item).collect() }
+        viewModelScope.launch(Dispatchers.IO) { repo.decreaseCart(item).collect() }
     }
 
     fun increaseCart(item: Cart) {
-        viewModelScope.launch { repo.increaseCart(item).collect() }
+        viewModelScope.launch(Dispatchers.IO) { repo.increaseCart(item).collect() }
     }
 
     fun deleteCart(item: Cart) {
-        viewModelScope.launch { repo.deleteCart(item).collect() }
+        viewModelScope.launch(Dispatchers.IO) { repo.deleteCart(item).collect() }
     }
 
     fun updateNotes(item: Cart) {
-        viewModelScope.launch { repo.setCartNotes(item).collect() }
+        viewModelScope.launch(Dispatchers.IO) { repo.setCartNotes(item).collect() }
     }
 }

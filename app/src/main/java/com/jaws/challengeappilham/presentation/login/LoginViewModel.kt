@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.jaws.challengeappilham.data.repository.UserRepository
 import com.jaws.challengeappilham.utils.ResultWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class LoginViewModel @Inject constructor(private val repo: UserRepository) : Vie
         get() = _loginResult
 
     fun doLogin(email: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repo.doLogin(email, password).collect {
                 _loginResult.postValue(it)
             }
