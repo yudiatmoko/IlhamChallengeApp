@@ -16,8 +16,8 @@ https://github.com/yudiatmoko/IlhamChallengeApp/assets/96367661/dd0f6e33-2d92-4a
 screenshots/ss_network_inspector.png
 
 ## Unit Test Coverage
+![App Screenshot](screenshots/ss_unit_test_coverage.png)
 
-screenshots/ss_unit_test_coverage.png
 
 ## Unit Test Coverage
 
