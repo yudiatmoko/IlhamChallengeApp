@@ -13,5 +13,13 @@ https://github.com/yudiatmoko/IlhamChallengeApp/assets/96367661/dd0f6e33-2d92-4a
 
 ## Network Inspector
 
-https://github.com/yudiatmoko/IlhamChallengeApp/screenshots/ss_network_inspector.png
+screenshots/ss_network_inspector.png
+
+## Unit Test Coverage
+
+screenshots/ss_unit_test_coverage.png
+
+## Unit Test Coverage
+
+screenshots/ss_build_variants.png
 
