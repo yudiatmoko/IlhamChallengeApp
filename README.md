@@ -19,7 +19,7 @@ https://github.com/yudiatmoko/IlhamChallengeApp/assets/96367661/dd0f6e33-2d92-4a
 ![App Screenshot](screenshots/ss_unit_test_coverage.png)
 
 
-## Unit Test Coverage
+## Build Variants
 ![App Screenshot](screenshots/ss_build_variants.png)
 
 
